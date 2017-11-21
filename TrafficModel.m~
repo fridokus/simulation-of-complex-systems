@@ -1,0 +1,45 @@
+clc
+clear all
+
+T = 100;
+deltaT = 1;
+
+ROAD_END_1 = 50;
+
+numberOfCars = 8;
+numberOfVar = 3;
+numberOfRoads = 4;
+nuberOfCarsAtRoad = zeros(numberOfRoads,1);
+
+cars = zeros(numberOfCars,numberOfVar);
+
+%%% Initial conditions (lägg i funktion?)
+constantVelocity = 1;
+nuberOfCarsAtRoad(:) = 2;
+cars(:,1) = 1:2:numberOfCars*2;
+cars(:,2) = constantVelocity; 
+cars(:,3) = [1 1 2 2 3 3 4 4]';
+%%%
+
+for t = 1:T 
+    for c = 1:numberOfCars
+        position = cars(c,1);
+        velocity = cars(c,2);
+        road = cars(c,3);
+        newPosition = UppdatePosition(position,velocity,deltaT);
+        cars(c,1) = newPosition;
+    end
+    r = 1;
+    i = 0;
+    for s = 1:numberOfRoads
+        r = r + i;
+        i = i + nuberOfCarsAtRoad(r);
+        carsAtRoad = cars(r:i,:);
+        carsAtRoad = Collision(carsAtRoad);
+    end    
+    PlotFunction(cars,ROAD_END_1);
+end
+
+
+  
+        

@@ -1,0 +1,28 @@
+function carsAtRoad = Collision(carsAtRoad)
+     
+    nbrCars = size(carsAtRoad,1);
+    positions = carsAtRoad(:,1);
+    velocity = carsAtRoad(:,2);
+    
+    [sP,I] = sort(positions,'descend');
+    
+    for i = 1:nbrCars-1
+        pos = positions(I(i));
+        targetV = velocity(I(i));
+        s = i +1;
+        pos1 = positions(I(i+1));
+        while pos == pos1
+            positions(I(i+1)) = positions(I(i+1)) - 1;
+            velocity(I(i+1)) = targetV; 
+            if i+1 < nbrCars +1
+                pos1 = positions(I(i+1));
+            else
+                pos1 = 10000;
+            end
+        end
+    end
+    
+    carsAtRoad(:,1) = positions;
+    carsAtRoad(:,2) = velocity;
+    
+    
