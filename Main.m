@@ -1,4 +1,5 @@
-clear all; clc;
+clear all; 
+clc;
 
 nodes = [0, 0;
   0, 100;
@@ -10,13 +11,11 @@ roadSegments = [1, 2;
   3, 4; 
   4, 1];
 
-cars = [0, 10.0, 1, 20;
-  10, 10.0, 1, 20;
-  0, 10.0, 2, 20;
-  0, -10, 3, -20;
-  0, -10, 4, -20]; %position, velocity, roadSegment, desiredVelocity
-cars = [0, 10, 1, 20;
-  0, 20, 2, 20];
+cars = [0, 10.0, 1, 20];
+%   10, 10.0, 1, 20;
+%   0, 10.0, 2, 20;
+%   0, -10, 3, -20;
+%   0, -10, 4, -20]; %position, velocity, roadSegment, desiredVelocity
 
 nbrOfCars = size(cars,1);
 nbrOfRoadSegments = size(roadSegments, 1);
