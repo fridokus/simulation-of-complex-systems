@@ -1,5 +1,6 @@
 function hypotenuse = calculateRoadLength(nodes, roads)
-  xLength = nodes(1, 1)-nodes(2, 1);
-  ylength = nodes(2, 1)-nodes(2, 2);
+  numberOfNodes = size(nodes,1);
+  xLength = nodes(roads(:,1)) - nodes(roads(:,2));
+  ylength = nodes(roads(:,1) + numberOfNodes) - nodes(roads(:,2) + numberOfNodes);
   hypotenuse = hypot(xLength, ylength);
 end

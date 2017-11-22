@@ -1,10 +1,9 @@
-function cars = updateVelocities(cars, nodes, roads)
-  limitingVelocities = checkForCollision(cars)
-  cars(:,4) = cars(:,4) + 0.001 .*(cars(:,4) <limitingVelocities)
-  cars(:,4) = cars(:,4) - 0.001 .*(cars(:,4) >limitingVelocities)
-%  [collisionCars, limitingCars] = checkForCollision(cars, nodes, roads);
-%  if ~isempty(collisionCars)
-%    cars(collisionCars, 4) = cars(limitingCars, 4);
-%  end
+function velocities = updateVelocities(cars, acceleration)
+  global positionIndex;
+  global roadIndex;
+  global maxVelocityIndex;
+  global currentVelocityIndex;
+  velocities = cars(:,currentVelocityIndex) + acceleration;
+  velocities = velocities .* (velocities > 0)
 
 end
