@@ -11,14 +11,14 @@ function cars = updateCars(cars, nodes, roads)
   cars = sortrows(cars, [2 1], 'descend');
   roadLengths = calculateRoadLength(nodes, roads);
   
-  acceleration = CheckCollision(cars);
+  acceleration = CheckCollision(cars, timeStep);
   
   carsAtIntersection = intersection(cars, roadLengths);
   
   oldVelocity = cars(:,currentVelocityIndex);
-  cars(:,currentVelocityIndex) = uppdateVelocity(oldVelocity,acceleration);
+  cars(:,currentVelocityIndex) = uppdateVelocity(oldVelocity,acceleration,timeStep);
   
-  cars = UpdatePosition(cars,carsAtIntersection,nodes,roads);
+  cars = UpdatePosition(cars,carsAtIntersection,nodes,roads,timeStep);
   
   acceleration = updateAcceleration(cars, nodes, roads);
   cars(:, currentVelocityIndex) = updateVelocities(cars, acceleration);
