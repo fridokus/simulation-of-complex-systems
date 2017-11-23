@@ -1,5 +1,5 @@
 
-function cars = UpdatePosition(cars,roadDecision,nodes,roads)
+function cars = updatePosition(cars,roadDecision,nodes,roads)
     % Uppdate postion and road parameter 
     global positionIndex;
     global currentVelocityIndex;

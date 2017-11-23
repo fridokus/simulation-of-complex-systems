@@ -39,7 +39,7 @@ timeStep = 0.1;
 cars = sortrows(cars, [2 1], 'descend');
 
 for i = 1:numberOfIterations
-  cars = updateCars(cars, nodes, roads)
+  cars = updateCars(cars, nodes, roads);
   plotCoordinates = parameterCoordinates(cars, nodes, roads);
 
   scatter(plotCoordinates(:,1), plotCoordinates(:,2))
