@@ -1,4 +1,4 @@
-function acceleration = CheckCollision(cars)
+function acceleration = checkCollision(cars)
   global positionIndex;
   global currentVelocityIndex;
   global roadIndex;
@@ -13,7 +13,7 @@ function acceleration = CheckCollision(cars)
     firstCar = cars(iCar,:);
     secondCar = cars(iCar - 1,:);
 
-    if firstCar(indexOfRoadSegment) == secondCar(roadIndex)
+    if firstCar(roadIndex) == secondCar(roadIndex)
       firstCarUpcomingPosition = firstCar(positionIndex) + firstCar(currentVelocityIndex) * timeStep;
       secondCarUpcomingPosition = secondCar(positionIndex) + secondCar(currentVelocityIndex) * timeStep;
       maxAcceleration = 2*(secondCarUpcomingPosition - firstCarUpcomingPosition - 10)/timeStep^2;

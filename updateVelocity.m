@@ -1,4 +1,4 @@
-function newVelocity = UpdateVelocity(oldVelocity,acceleration)
+function newVelocity = updateVelocity(oldVelocity,acceleration)
     % Update velocity
     global timeStep;
     newVelocity = oldVelocity + timeStep*acceleration;
