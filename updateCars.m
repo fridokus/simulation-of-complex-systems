@@ -8,15 +8,14 @@ function cars = updateCars(cars, nodes, roads)
   global visionIndex;
   global nextRoadIndex;
 
-  cars = sortrows(cars, [2 1], 'descend');
+  cars = -sortrows(-cars, [2 1]);
   roadLengths = calculateRoadLength(nodes, roads);
   
   acceleration = checkCollision(cars);
   
   carsAtIntersection = intersection(cars, roadLengths);
   
-  oldVelocity = cars(:,currentVelocityIndex);
-  cars(:,currentVelocityIndex) = updateVelocity(oldVelocity,acceleration);
+  cars = updateVelocity(cars,acceleration);
   
   cars = updatePosition(cars,carsAtIntersection,nodes,roads);
   

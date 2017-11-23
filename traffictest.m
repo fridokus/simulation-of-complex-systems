@@ -36,7 +36,7 @@ nextRoadIndex = 8;
 global timeStep;
 timeStep = 0.1;
 
-cars = sortrows(cars, [2 1], 'descend');
+cars = -sortrows(-cars, [2 1]);
 
 for i = 1:numberOfIterations
   cars = updateCars(cars, nodes, roads)

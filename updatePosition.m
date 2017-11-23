@@ -9,14 +9,14 @@ function cars = UpdatePosition(cars,roadDecision,nodes,roads)
    
     oldPosition = cars(:,positionIndex);
     velocity = cars(:,currentVelocityIndex);
-    oldRoad = cars(:,roadIndex);
-    newRoad = cars(:,nextRoadIndex);
-    distVector = nodes(roads(oldRoad,1),:)-nodes(roads(oldRoad,2),:);
+    currentRoad = cars(:,roadIndex);
+    nextRoad = cars(:,nextRoadIndex);
+    distVector = nodes(roads(currentRoad,1),:)-nodes(roads(currentRoad,2),:);
     lengthOldRoad = sqrt(distVector(:,1).^2+distVector(:,2).^2); 
 
     newPosition = oldPosition + timeStep*velocity -roadDecision.*lengthOldRoad;
     cars(:,positionIndex) = newPosition;
-    cars(:,roadIndex) = newRoad.*roadDecision +(1-roadDecision).*oldRoad;
+    cars(:,roadIndex) = nextRoad.*roadDecision +(1-roadDecision).*currentRoad;
     
 end
 
