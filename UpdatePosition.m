@@ -1,11 +1,12 @@
-function cars = UpdatePosition(cars,roadDecision,nodes,roads,timeStep)
+
+function cars = UpdatePosition(cars,roadDecision,nodes,roads)
     % Uppdate postion and road parameter 
     global positionIndex;
     global currentVelocityIndex;
     global roadIndex;
     global nextRoadIndex;
-    
-    
+    global timeStep;
+   
     oldPosition = cars(:,positionIndex);
     velocity = cars(:,currentVelocityIndex);
     oldRoad = cars(:,roadIndex);
