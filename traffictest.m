@@ -15,7 +15,7 @@ roads = [ 1 2;
 
 cars = [0 1 20 0 2 2 3 2; 
         10 1 20 0 2 2 3 2;
-        20 1 0.03 0 2 2 3 2];
+        20 1 20 0 2 2 3 2];
 
 global positionIndex;
 positionIndex = 1;

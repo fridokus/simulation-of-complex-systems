@@ -28,4 +28,3 @@ function acceleration = checkCollision(cars)
     acceleration(iCar) = maxAcceleration;
   end
 end
-
