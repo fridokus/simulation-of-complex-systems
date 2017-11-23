@@ -1,8 +1,9 @@
-function acceleration = CheckCollision(cars, timeStep)
+function acceleration = CheckCollision(cars)
   global positionIndex;
   global currentVelocityIndex;
   global roadIndex;
   global maxAccelerationIndex;
+  global timeStep;
   
   nbrOfCars = size(cars, 1);  
   acceleration = zeros(nbrOfCars, 1);
