@@ -4,12 +4,18 @@ clc
 
 numberOfIterations = 9000;
 
-nodes = [4 1; 4 110; 30 30; 30 1];
-roads = [1 2; 2 3; 3 4; 4 1];
+nodes = [0 100;
+         100 100; 
+         100 0; 
+         0 0];
+roads = [ 1 2; 
+          2 3; 
+          3 4; 
+          4 1];
 
-cars = [0 1 0.035 0 0.002 0.1 3 2; 
-  6 1 0.03 0 0.002 0.1 3 2;
-  2 1 0.03 0 0.004 0.1 3 2];
+cars = [0 1 20 0 2 2 3 2; 
+        10 1 20 0 2 2 3 2;
+        20 1 0.03 0 2 2 3 2];
 
 global positionIndex;
 positionIndex = 1;
@@ -37,6 +43,6 @@ for i = 1:numberOfIterations
   plotCoordinates = parameterCoordinates(cars, nodes, roads);
 
   scatter(plotCoordinates(:,1), plotCoordinates(:,2))
-  axis([0 40 -10 40])
+  axis([-10 110 -10 110])
   drawnow
 end
