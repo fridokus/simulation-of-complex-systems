@@ -1,5 +1,5 @@
-function cars = uppdatePosition(cars,roadDecision,nodes,roads,timeStep)
-    % Uppdate postion and road parameter 
+function cars = UpdatePosition(cars,roadDecision,nodes,roads,timeStep)
+    % Update postion and road parameter 
     
     oldPosition = cars(:,1);
     velocity = cars(:,4);

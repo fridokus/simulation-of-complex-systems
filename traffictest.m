@@ -2,13 +2,14 @@ clear all
 clf
 clc
 
-numberOfCars = 1;
 numberOfIterations = 9000;
 
 nodes = [4 1; 4 30; 30 30; 30 1];
 roads = [1 2; 2 3; 3 4; 4 1];
 
-cars = [0 1 0.035 0 0.002 0.1 3 2; 6 1 0.03 0 0.002 0.1 3 2; 2 1 0.03 0 0.004 0.1 3 2]
+cars = [0 1 0.035 0 0.002 0.1 3 2; 
+  6 1 0.03 0 0.002 0.1 3 2;
+  2 1 0.03 0 0.004 0.1 3 2];
 
 global positionIndex;
 positionIndex = 1;
