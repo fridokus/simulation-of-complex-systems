@@ -13,9 +13,14 @@ roads = [ 1 2;
           3 4; 
           4 1];
 
-cars = [0 1 20 0 2 2 3 2; 
-        10 1 20 0 2 2 3 2;
-        20 1 0.03 0 2 2 3 2];
+cars = [0 1 20 0 2 2 3 2 1; 
+        10 1 20 0 2 2 3 2 1;
+        20 1 0.03 0 2 2 3 2 1];
+    
+routes = [1 2 3 4 1 2 3 4 0;1 2 3 4 1 2 3 4 0;1 2 3 4 1 2 3 4 0];
+% nbrOfCars = 3;
+% parkingNodes =[1,5];
+% routes =InizilizeRoutes(parkingNodes,nbrOfCars)
 
 global positionIndex;
 positionIndex = 1;
@@ -33,13 +38,15 @@ global visionIndex;
 visionIndex = 7;
 global nextRoadIndex;
 nextRoadIndex = 8;
+global nextRoadInRouteIndex; 
+nextRoadInRouteIndex = 9;
 global timeStep;
 timeStep = 0.1;
 
 cars = -sortrows(-cars, [2 1]);
 
 for i = 1:numberOfIterations
-  cars = updateCars(cars, nodes, roads)
+  cars = updateCars(cars, nodes, roads,routes)
   plotCoordinates = parameterCoordinates(cars, nodes, roads);
 
   scatter(plotCoordinates(:,1), plotCoordinates(:,2))

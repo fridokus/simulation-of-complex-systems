@@ -9,8 +9,6 @@ function cars = updateVelocity(cars,acceleration)
     
     newVelocity = currentVelocity + timeStep*acceleration;
     decision = ceil((maxVelocity-newVelocity)./(maxVelocity+newVelocity));
-    disp(decision)
-    disp(newVelocity)
     cars(:,currentVelocityIndex) = decision.*newVelocity + (1-decision).*maxVelocity;
     
 end
