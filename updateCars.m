@@ -3,7 +3,7 @@ function cars = updateCars(cars, nodes, roads)
   cars = -sortrows(-cars, [2 1]);
   roadLengths = calculateRoadLength(nodes, roads);
   
-  acceleration = updateAcceleration(cars, nodes, roads);%checkCollision(cars);
+  acceleration = checkCollision(cars);
   
   carsAtIntersection = intersection(cars, roadLengths);
   

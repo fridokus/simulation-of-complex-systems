@@ -18,7 +18,7 @@ function acceleration = checkCollision(cars)
       firstCarUpcomingPosition = firstCar(positionIndex) + firstCar(currentVelocityIndex) * timeStep;
       secondCarUpcomingPosition = secondCar(positionIndex) + secondCar(currentVelocityIndex) * timeStep;
       maxAcceleration = 2*(secondCarUpcomingPosition - firstCarUpcomingPosition - 10)/timeStep^2;
-      % the 1 is the safety distance between cars
+      % the 10 is the safety distance between cars
       if maxAcceleration > secondCar(maxAccelerationIndex)
         maxAcceleration = secondCar(maxAccelerationIndex);
       end
