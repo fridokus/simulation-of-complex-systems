@@ -4,6 +4,7 @@ function acceleration = checkCollisionAtIntersection(cars, roads, nodes)
   global currentVelocityIndex;
   global positionIndex;
   global maxAccelerationIndex;
+  global maxVelocityInIntersection;
   
   nbrOfRoads = size(roads, 1);
   nbrOfNodes = size(roads, 1);
@@ -12,11 +13,8 @@ function acceleration = checkCollisionAtIntersection(cars, roads, nodes)
   roadLengths = calculateRoadLength(nodes, roads);
   velocities = cars(:,currentVelocityIndex);
   positions = cars(:,positionIndex);
-  maxAccelerations = cars(:,maxAccelerationIndex);
-  maxVelocityInIntersection = 5;
   
-  timeUntilIntersection = (maxVelocityInIntersection - velocities)./maxAccelerations;
-  acceleration = min(maxAccelerations,  
+  acceleration = detectIntersection(cars, roads, nodes);
   cars(:,maxAccelerationIndex);
   
   currentNode = 1;
@@ -30,7 +28,6 @@ function acceleration = checkCollisionAtIntersection(cars, roads, nodes)
     distanceDifference = roadLengths(carsOnRoads(:,roadIndex)) - positions(iCarsOnConnectingRoads);
     iCloseCars = find(distanceDifference < 10);
     if length(iCloseCars) > 1
-      disp("Intersection chaos")
       roadLengths(carsOnRoads(iCloseCars,roadIndex));
       distanceDiff = roadLengths(carsOnRoads(iCloseCars,roadIndex)) - positions(iCloseCars);
       timeUntilIntersection = (maxVelocityInIntersection - velocities(iCloseCars))./acceleration(iCloseCars);
@@ -38,9 +35,8 @@ function acceleration = checkCollisionAtIntersection(cars, roads, nodes)
       [sortedTime, prioritation] = sort(timeUntilIntersection, 'ascend');
       orderOfCarsToIntersection = iCloseCars(prioritation);
       nbrOfCloseCars = length(orderOfCarsToIntersection);
-      time = linspace(sortedTime(1), sortedTime(1)+((nbrOfCloseCars-1) * 2), nbrOfCloseCars)';
+      time = linspace(sortedTime(1), sortedTime(1)+((nbrOfCloseCars-1) * 5), nbrOfCloseCars)';
       acceleration(orderOfCarsToIntersection) = 2*(distanceDiff - velocities(iCloseCars).*time)./time;
-      clc;
     end
     checkedNodes(currentNode) = 1;
     currentNode = currentNode + 1;
