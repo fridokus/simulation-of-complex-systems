@@ -1,10 +1,10 @@
 function acceleration = checkCollision(cars)
+  % Adjusts the acceleration depending on how fast the car in front drives
   global positionIndex;
   global currentVelocityIndex;
   global roadIndex;
   global maxAccelerationIndex;
   global timeStep;
-  global maxDeaccelerationIndex;
   
   nbrOfCars = size(cars, 1);  
   acceleration = zeros(nbrOfCars, 1);

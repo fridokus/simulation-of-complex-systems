@@ -1,5 +1,7 @@
 function acceleration = detectIntersection(cars, roads, nodes)
-  % 
+  % Adjusts the acceleration so that the velocity isn't larger than
+  % maxVelociyInIntersection when turning.
+  
   global positionIndex;
   global currentVelocityIndex;
   global roadIndex;
@@ -8,8 +10,7 @@ function acceleration = detectIntersection(cars, roads, nodes)
   global maxVelocityInIntersection;
   
   nbrOfCars = size(cars, 1); 
-  acceleration = zeros(nbrOfCars, 1);
-  acceleration(1) = cars(1, maxAccelerationIndex);
+  acceleration = cars(:,maxAccelerationIndex);
 
   for iCar=1:nbrOfCars
     car = cars(iCar,:);
