@@ -11,6 +11,7 @@ function acceleration = detectIntersection(cars, roads, nodes)
   
   nbrOfCars = size(cars, 1); 
   acceleration = cars(:,maxAccelerationIndex);
+  safetyDistanceToIntersection = 0.0;
 
   for iCar=1:nbrOfCars
     car = cars(iCar,:);
@@ -21,7 +22,7 @@ function acceleration = detectIntersection(cars, roads, nodes)
     startNode = roads(road, 1);
     endNode = roads(road, 2);
     lengthOfRoad = norm(nodes(startNode,:) - nodes(endNode,:));
-    stopDistance = lengthOfRoad - position;
+    stopDistance = lengthOfRoad - position - safetyDistanceToIntersection;
     stopTime = (maxVelocityInIntersection - velocity)/maxDeacceleration; %makes sure that it doesn't exceed max deacc
     
     maxAcceleration = 2*(stopDistance - (velocity * stopTime))/stopTime^2;

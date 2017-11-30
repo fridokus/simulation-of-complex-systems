@@ -15,6 +15,7 @@ function acceleration = checkCollisionAtIntersection(cars, roads, nodes)
   checkedNodes = zeros(1, nbrOfNodes);
   roadLengths = calculateRoadLength(nodes, roads);
   velocities = cars(:,currentVelocityIndex);
+  velocities(find(velocities < 0)) = 0.001;
   positions = cars(:,positionIndex);
   
   acceleration = detectIntersection(cars, roads, nodes);
@@ -40,7 +41,7 @@ function acceleration = checkCollisionAtIntersection(cars, roads, nodes)
     
     carsOnRoads = cars(iCarsOnConnectingRoads,:);                    %cars on connecting roads
     distanceDifference = roadLengths(carsOnRoads(:,roadIndex)) - positions(iCarsOnConnectingRoads); %distance to intersection for all cars
-    iCloseCars = find(distanceDifference < 10);                      % critical if a car is closer than 10 m to intersection, should be changed to something else later on
+    iCloseCars = find(distanceDifference < 3);                      % critical if a car is closer than 10 m to intersection, should be changed to something else later on
     
     if length(iCloseCars) > 1                                        % if there are more than 1 car going towards the intersection
       distanceDiff = roadLengths(carsOnRoads(iCloseCars,roadIndex)) - positions(iCloseCars);

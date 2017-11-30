@@ -1,9 +1,10 @@
 function nextRoadIndex = getNextRoadIndex(currentRoad, roads)
-
-  connectingRoads = find(roads(currentRoad,2)==roads(:,1));
+  
+  endNode = roads(currentRoad, 2);
+  connectingRoads = find(endNode==roads(:,1));
   if length(connectingRoads) > 1
     r = randi(length(connectingRoads));
-    nextRoadIndex = roads(r);
+    nextRoadIndex = connectingRoads(r);
   else
     nextRoadIndex = connectingRoads;
   end
