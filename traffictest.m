@@ -13,9 +13,9 @@ roads = [ 1 2;
           3 4; 
           4 1];
 
-cars = [0 1 20 0 2 2 3 2; 
-        10 1 20 0 2 2 3 2;
-        20 1 20 0 2 2 3 2];
+cars = [0 1 20 0 2 -2 3 2; 
+        10 1 30 0 2 -2 3 2
+        20 1 40 0 2 -2 3 2];
 
 global positionIndex;
 positionIndex = 1;
@@ -42,7 +42,14 @@ for i = 1:numberOfIterations
   cars = updateCars(cars, nodes, roads);
   plotCoordinates = parameterCoordinates(cars, nodes, roads);
 
-  scatter(plotCoordinates(:,1), plotCoordinates(:,2))
+  velocities = cars(:,currentVelocityIndex);
+  scatter(plotCoordinates(:,1), plotCoordinates(:,2), 'filled')
+  text(-5, 102, num2str(velocities));
   axis([-10 110 -10 110])
   drawnow
 end
+
+
+
+
+
