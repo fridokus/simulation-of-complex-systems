@@ -31,16 +31,13 @@ function acceleration = checkCollision(cars, nodes, roads)
       iCarsOnUpcomingRoad = find(firstCar(nextRoadIndex) == cars(:,roadIndex));
       if ~isempty(iCarsOnUpcomingRoad)
         firstCarUpcomingPosition = roadLengths(firstCar(roadIndex)) - firstCarUpcomingPosition;
-%         if firstCarUpcomingPosition < 0
-%           firstCarUpcomingPosition = - firstCarUpcomingPosition;
-%         end
         secondCar = cars(iCarsOnUpcomingRoad(end),:);
         secondCarUpcomingPosition = secondCar(positionIndex) + secondCar(currentVelocityIndex) * timeStep;
         maxAcceleration = 2*(firstCarUpcomingPosition + secondCarUpcomingPosition - safetyDistanceBetweenCars)/timeStep^2;
         if maxAcceleration > firstCar(maxAccelerationIndex)
           maxAcceleration = firstCar(maxAccelerationIndex);
-        %elseif maxAcceleration < secondCar(maxDeaccelerationIndex)
-        %  maxAcceleration = secondCar(maxDeaccelerationIndex);
+%         elseif maxAcceleration < first(maxDeaccelerationIndex)
+%           maxAcceleration = first(maxDeaccelerationIndex);
         end
         acceleration(iCar) = maxAcceleration;
      end

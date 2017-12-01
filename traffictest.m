@@ -50,6 +50,9 @@ cars = [10  1 20 0 2 -2 3 2;
         0   7 10 0 2 -2 3 8;
         10  7 10 0 2 -2 3 8;
         0   8 10 0 2 -2 3 9;
+        10  9 20 0 2 -2 3 10; 
+        20  9 30 0 2 -2 3 10;
+        30  9 10 0 2 -2 3 10;
         0  10 20 0 2 -2 3 11;
         10 10 10 0 2 -2 3 11;
         20 10 10 0 2 -2 3 11;
@@ -83,8 +86,6 @@ global maxVelocityInIntersection;
 maxVelocityInIntersection = 15;
 
 cars = -sortrows(-cars, [2 1]);
-nbrOfCars = size(cars, 1);
-velos = ones(numberOfIterations, nbrOfCars);
 for i = 1:numberOfIterations
   cars = updateCars(cars, nodes, roads,routes);
 
@@ -101,13 +102,5 @@ for i = 1:numberOfIterations
   axis([-10 110 -10 210])
   plotRoads(roads, nodes);
   drawnow
-  velos(i,:) = velocities;
 end
 
-clf
-figure(2)
-plot(linspace(0, i.*0.1, i), velos(:,1), '-.r')
-hold on
-plot(linspace(0, i.*0.1, i), velos(:,2), '-.b')
-plot(linspace(0, i.*0.1, i), velos(:,3), '-.g')
-legend('Car 1', 'Car 2', 'Car 3')
