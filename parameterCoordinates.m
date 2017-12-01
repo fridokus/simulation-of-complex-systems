@@ -1,8 +1,10 @@
 function coordinates = parameterCoordinates(cars, nodes, roads)
-  numberOfNodes = size(nodes,1);
-  startingPoints = [nodes(roads(:,1)), nodes(roads(:,1) + numberOfNodes)];
-  endPoints = [nodes(roads(:,2)), nodes(roads(:,2) + numberOfNodes)];
+  global positionIndex
+  global roadIndex
+  numberOfNodes = size(nodes,positionIndex);
+  startingPoints = [nodes(roads(:,positionIndex)), nodes(roads(:,positionIndex) + numberOfNodes)];
+  endPoints = [nodes(roads(:,roadIndex)), nodes(roads(:,roadIndex) + numberOfNodes)];
   directionVectors =  endPoints - startingPoints;
   roadLengths = calculateRoadLength(nodes, roads);
-  coordinates = startingPoints(cars(:,2),:) + cars(:,1)./roadLengths(cars(:,2)) .* directionVectors(cars(:,2),:);
+  coordinates = startingPoints(cars(:,roadIndex),:) + cars(:,positionIndex)./roadLengths(cars(:,roadIndex)) .* directionVectors(cars(:,roadIndex),:);
 end
