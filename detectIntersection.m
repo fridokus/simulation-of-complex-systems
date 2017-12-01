@@ -28,6 +28,8 @@ function acceleration = detectIntersection(cars, roads, nodes)
     maxAcceleration = 2*(stopDistance - (velocity * stopTime))/stopTime^2;
     if maxAcceleration > car(maxAccelerationIndex)
       maxAcceleration =  car(maxAccelerationIndex);
+    elseif maxAcceleration < maxDeacceleration
+      maxAcceleration = maxDeacceleration;
     end
     acceleration(iCar) = maxAcceleration;
   end
