@@ -55,6 +55,9 @@ cars = [10  1 20 0 2 -2 3 2;
         20 10 10 0 2 -2 3 11;
         0  11 10 0 2 -2 3 12;
         6  11 10 0 2 -2 3 12;];
+    
+routes = [1 2 3 4 1 2 3 4 0;1 2 3 4 1 2 3 4 0;1 2 3 4 1 2 3 4 0];
+
 
 global positionIndex;
 positionIndex = 1;
@@ -72,6 +75,8 @@ global visionIndex;
 visionIndex = 7;
 global nextRoadIndex;
 nextRoadIndex = 8;
+global nextRoadInRouteIndex; 
+nextRoadInRouteIndex = 9;
 global timeStep;
 timeStep = 0.1;
 global maxVelocityInIntersection;
@@ -80,7 +85,8 @@ maxVelocityInIntersection = 15;
 cars = -sortrows(-cars, [2 1]);
 
 for i = 1:numberOfIterations
-  cars = updateCars(cars, nodes, roads);
+  cars = updateCars(cars, nodes, roads,routes);
+
   plotCoordinates = parameterCoordinates(cars, nodes, roads);
   
 

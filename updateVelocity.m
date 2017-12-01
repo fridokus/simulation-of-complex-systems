@@ -8,8 +8,10 @@ function cars = updateVelocity(cars,acceleration)
     maxVelocity = cars(:,maxVelocityIndex);
     
     newVelocity = currentVelocity + timeStep*acceleration;
+
     cars(:,currentVelocityIndex) = newVelocity;
     decision = newVelocity > maxVelocity;
+
     
     cars(decision,currentVelocityIndex) = maxVelocity(decision);
     decision = newVelocity < 0;
