@@ -25,32 +25,20 @@ function acceleration = checkCollision(cars, nodes, roads)
         maxAcceleration = secondCar(maxAccelerationIndex);
       end
       acceleration(iCar) = maxAcceleration;
-    elseif secondCarUpcomingPosition > roadLengths(secondCar(roadIndex))
-      % Check car in upcoming road if turning
+    else%if secondCarUpcomingPosition > roadLengths(secondCar(roadIndex))
+      % If you're first on you're road
       iCarsOnUpcomingRoad = find(secondCar(nextRoadIndex) == cars(:,roadIndex));
       if ~isempty(iCarsOnUpcomingRoad)
-        secondCarUpcomingPosition = secondCarUpcomingPosition - roadLengths(secondCar(roadIndex))
+        if secondCarUpcomingPosition > roadLengths(secondCar(roadIndex))
+          secondCarUpcomingPosition = secondCarUpcomingPosition - roadLengths(secondCar(roadIndex));
+        end
         firstCar = cars(iCarsOnUpcomingRoad(end),:);
         firstCarUpcomingPosition = firstCar(positionIndex) + firstCar(currentVelocityIndex) * timeStep;
         maxAcceleration = 2*(firstCarUpcomingPosition - secondCarUpcomingPosition - safetyDistanceBetweenCars)/timeStep^2;
         if maxAcceleration > secondCar(maxAccelerationIndex)
           maxAcceleration = secondCar(maxAccelerationIndex);
         elseif maxAcceleration < secondCar(maxDeaccelerationIndex)
-         maxAcceleration = secondCar(maxDeaccelerationIndex);
-        end
-        acceleration(iCar) = maxAcceleration;
-      end
-    else 
-      % Check car on next road, even if not close.
-      iCarsOnUpcomingRoad = find(secondCar(nextRoadIndex) == cars(:,roadIndex));
-      if ~isempty(iCarsOnUpcomingRoad)
-        firstCar = cars(iCarsOnUpcomingRoad(end),:);
-        firstCarUpcomingPosition = firstCar(positionIndex) + firstCar(currentVelocityIndex) * timeStep;
-        maxAcceleration = 2*(firstCarUpcomingPosition - safetyDistanceBetweenCars)/timeStep^2;
-        if maxAcceleration > secondCar(maxAccelerationIndex)
-          maxAcceleration = secondCar(maxAccelerationIndex);
-        %elseif maxAcceleration < secondCar(maxDeaccelerationIndex)
-        %  maxAcceleration = secondCar(maxDeaccelerationIndex);
+          maxAcceleration = secondCar(maxDeaccelerationIndex);
         end
         acceleration(iCar) = maxAcceleration;
       end

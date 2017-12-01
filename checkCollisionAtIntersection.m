@@ -7,12 +7,14 @@ function acceleration = checkCollisionAtIntersection(cars, roads, nodes)
   global positionIndex;
   global maxAccelerationIndex;
   global maxVelocityInIntersection;
+  global timeStep;
   
   nbrOfNodes = size(roads, 1);
   checkedNodes = zeros(1, nbrOfNodes);
   roadLengths = calculateRoadLength(nodes, roads);
   velocities = cars(:,currentVelocityIndex);
-  %velocities(find(velocities < 0)) = 0.001;
+  iVelocitiesTooLow = find(velocities < 0);
+  velocities(iVelocitiesTooLow) = timeStep * cars(iVelocitiesTooLow,maxAccelerationIndex);
   positions = cars(:,positionIndex);
   
   acceleration = detectIntersection(cars, roads, nodes);
