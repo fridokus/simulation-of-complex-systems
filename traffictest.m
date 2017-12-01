@@ -77,7 +77,7 @@ timeStep = 0.1;
 global maxVelocityInIntersection;
 maxVelocityInIntersection = 15;
 
-cars = sortrows(cars, [2 1], 'descend');
+cars = -sortrows(-cars, [2 1]);
 
 for i = 1:numberOfIterations
   cars = updateCars(cars, nodes, roads);
