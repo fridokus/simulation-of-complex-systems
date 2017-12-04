@@ -2,7 +2,7 @@ clear all
 clf
 clc
 
-numberOfIterations = 9000;
+numberOfIterations = 1500;
 
 nodes = initializeNodes();
 roads = initializeRoads(nodes);
@@ -36,12 +36,12 @@ global maxVelocityInIntersection;
 maxVelocityInIntersection = 15;
 
 cars = -sortrows(-cars, [2 1]);
-
+nbrOfCars = size(cars, 1);
+velos = ones(numberOfIterations, nbrOfCars);
 for i = 1:numberOfIterations
   cars = updateCars(cars, nodes, roads,routes);
 
   plotCoordinates = parameterCoordinates(cars, nodes, roads);
-  
 
   velocities = cars(:,currentVelocityIndex);
   positions = cars(:,positionIndex);
@@ -50,13 +50,17 @@ for i = 1:numberOfIterations
   hold on
   %text(-5, 102, num2str(velocities));
   %text(-5, 10, num2str(positions, 4));
-  text(0, 190, strcat('Time:   ',num2str(i*timeStep)), 'fontsize', 18);
+  text(0, 190, strcat('Time: ',num2str(i*timeStep)), 'fontsize', 18);
   axis([-10 110 -10 210])
   plotRoads(roads, nodes);
   drawnow
+  velos(i,:) = velocities;
 end
 
-
-
-
-
+clf
+figure(2)
+plot(linspace(0, i.*0.1, i), velos(:,1), '-.r')
+hold on
+plot(linspace(0, i.*0.1, i), velos(:,2), '-.b')
+plot(linspace(0, i.*0.1, i), velos(:,3), '-.g')
+legend('Car 1', 'Car 2', 'Car 3')

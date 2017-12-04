@@ -11,7 +11,6 @@ function cars = updateVelocity(cars,acceleration)
 
     cars(:,currentVelocityIndex) = newVelocity;
     decision = newVelocity > maxVelocity;
-
     
     cars(decision,currentVelocityIndex) = maxVelocity(decision);
     decision = newVelocity < 0;

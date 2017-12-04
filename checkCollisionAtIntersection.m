@@ -2,20 +2,19 @@ function acceleration = checkCollisionAtIntersection(cars, roads, nodes)
   % Adjust the acceleration of cars so that not multiple cars drive into
   % the intersection at once
   
-  % TODO: maybe one should just look at the cars that are closest to the
-  % intersection
-  
   global roadIndex;
   global currentVelocityIndex;
   global positionIndex;
   global maxAccelerationIndex;
   global maxVelocityInIntersection;
+  global timeStep;
   
   nbrOfNodes = size(roads, 1);
   checkedNodes = zeros(1, nbrOfNodes);
   roadLengths = calculateRoadLength(nodes, roads);
   velocities = cars(:,currentVelocityIndex);
-  velocities(find(velocities < 0)) = 0.001;
+  iVelocitiesTooLow = find(velocities < 0);
+  velocities(iVelocitiesTooLow) = 0.5;
   positions = cars(:,positionIndex);
   
   acceleration = detectIntersection(cars, roads, nodes);
@@ -41,7 +40,7 @@ function acceleration = checkCollisionAtIntersection(cars, roads, nodes)
     
     carsOnRoads = cars(iCarsOnConnectingRoads,:);                    %cars on connecting roads
     distanceDifference = roadLengths(carsOnRoads(:,roadIndex)) - positions(iCarsOnConnectingRoads); %distance to intersection for all cars
-    iCloseCars = find(distanceDifference < 3);                      % critical if a car is closer than 10 m to intersection, should be changed to something else later on
+    iCloseCars = find(distanceDifference < 3);                      % critical if a car is closer than 3m to intersection, should be changed to something else later on
     
     if length(iCloseCars) > 1                                        % if there are more than 1 car going towards the intersection
       distanceDiff = roadLengths(carsOnRoads(iCloseCars,roadIndex)) - positions(iCloseCars);
@@ -49,7 +48,7 @@ function acceleration = checkCollisionAtIntersection(cars, roads, nodes)
       [sortedTime, prioritation] = sort(timeUntilIntersection, 'ascend');
       orderOfCarsToIntersection = iCloseCars(prioritation);          % the index of the order of when the cars will reach the intersection
       nbrOfCloseCars = length(orderOfCarsToIntersection);            % nbr of cars close to intersection that need to adjust their velocity
-      time = linspace(sortedTime(1), sortedTime(1)+((nbrOfCloseCars-1) * 5), nbrOfCloseCars)';   %time interval of when the cars should reach the intersection 
+      time = linspace(sortedTime(1), sortedTime(1)+((nbrOfCloseCars-1) * 2), nbrOfCloseCars)';   %time interval of when the cars should reach the intersection 
       acceleration(orderOfCarsToIntersection) = 2*(distanceDiff - velocities(iCloseCars).*time)./time;  % set acceleration based on time interval
     end
     checkedNodes(currentNode) = 1;
