@@ -4,8 +4,8 @@ clc
 
 numberOfIterations = 1500;
 
-nodes = importdata('nodes.xlsx');
-roads = importdata('roads.xlsx');
+nodes = initializeNodes();
+roads = initializeRoads(nodes);
 
 cars = initializeCars(nodes, roads);
     
