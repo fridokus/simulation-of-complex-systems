@@ -47,33 +47,33 @@ cars(:,nextRoadIndex) = routes(:,2);
 cars(:,nextRoadInRouteIndex) = 2;
 
 cars = -sortrows(-cars, [2 1]);
+% 
+% savePosition = zeros(nbrOfCars,numberOfIterations);
+% saveRoad = zeros(nbrOfCars,numberOfIterations);
+% saveMaxVelocity = zeros(nbrOfCars,numberOfIterations);
+% saveCurrentVelocity = zeros(nbrOfCars,numberOfIterations);
+% saveMaxAcceleration = zeros(nbrOfCars,numberOfIterations);
+% saveMaxDeacceleration = zeros(nbrOfCars,numberOfIterations);
+% saveVision = zeros(nbrOfCars,numberOfIterations);
+% saveNextRoad = zeros(nbrOfCars,numberOfIterations);
 
-savePosition = zeros(nbrOfCars,numberOfIterations);
-saveRoad = zeros(nbrOfCars,numberOfIterations);
-saveMaxVelocity = zeros(nbrOfCars,numberOfIterations);
-saveCurrentVelocity = zeros(nbrOfCars,numberOfIterations);
-saveMaxAcceleration = zeros(nbrOfCars,numberOfIterations);
-saveMaxDeacceleration = zeros(nbrOfCars,numberOfIterations);
-saveVision = zeros(nbrOfCars,numberOfIterations);
-saveNextRoad = zeros(nbrOfCars,numberOfIterations);
-
-initSaveData(savePosition,saveRoad,saveMaxVelocity, saveCurrentVelocity, ...
-    saveMaxAcceleration, saveMaxDeacceleration, saveVision, saveNextRoad);
+% initSaveData(savePosition,saveRoad,saveMaxVelocity, saveCurrentVelocity, ...
+%     saveMaxAcceleration, saveMaxDeacceleration, saveVision, saveNextRoad);
 
 for i = 1:numberOfIterations
   nIteration = nIteration + 1;
   initializedCarIndices = find(sum(cars'));
   unInitializedCarIndices = find(sum(cars')==0);
   cars(initializedCarIndices,:) = updateCars(cars(initializedCarIndices,:), nodes, roads,routes);
-  
-  savePosition = savePositions(cars, nIteration, savePosition);
-  saveRoad = saveRoads(cars, nIteration, saveRoad);
-  saveMaxVelocity = saveMaxVelocities(cars, nIteration, saveMaxVelocity);
-  saveCurrentVelocity = saveCurrentVelocities(cars, nIteration, saveCurrentVelocity);
-  saveMaxAcceleration = saveMaxAccelerations(cars, nIteration, saveMaxAcceleration);
-  saveMaxDeacceleration = saveMaxDeaccelerations(cars, nIteration, saveMaxDeacceleration);
-  saveVision = saveVisions(cars, nIteration, saveVision);
-  saveNextRoad = saveNextRoads(cars, nIteration, saveNextRoad); 
+%   
+%   savePosition = savePositions(cars, nIteration, savePosition);
+%   saveRoad = saveRoads(cars, nIteration, saveRoad);
+%   saveMaxVelocity = saveMaxVelocities(cars, nIteration, saveMaxVelocity);
+%   saveCurrentVelocity = saveCurrentVelocities(cars, nIteration, saveCurrentVelocity);
+%   saveMaxAcceleration = saveMaxAccelerations(cars, nIteration, saveMaxAcceleration);
+%   saveMaxDeacceleration = saveMaxDeaccelerations(cars, nIteration, saveMaxDeacceleration);
+%   saveVision = saveVisions(cars, nIteration, saveVision);
+%   saveNextRoad = saveNextRoads(cars, nIteration, saveNextRoad); 
   
   plotCoordinates = parameterCoordinates(cars(initializedCarIndices,:), nodes, roads);
 %   if ~isempty(unInitializedCarIndices)
@@ -90,7 +90,7 @@ for i = 1:numberOfIterations
   %text(-5, 10, num2str(positions, 4));
   text(0, 190, strcat('Time: ',num2str(i*timeStep)), 'fontsize', 18);
 
-  axis([-10 110 -10 210])
+  axis([-10 510 -10 510])
   plotRoads(roads, nodes);
   drawnow
   velos(i,:) = velocities;

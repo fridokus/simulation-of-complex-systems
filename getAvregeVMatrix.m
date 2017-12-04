@@ -20,7 +20,11 @@ function averageV = getAvregeVMatrix(carsV,carsR,nodes,roads)
    for i = 1:length(roads)
         from = roads(i,1);
         to = roads(i,2);
-        averageV(from,to) = vAtRoad(i);
+        if (1/vAtRoad(i) > 1000000)
+            averageV(from,to) = 1000000; 
+        else
+            averageV(from,to) = 1/vAtRoad(i);
+        end
     end
     
 end
