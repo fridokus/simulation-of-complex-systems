@@ -15,5 +15,7 @@ function roads = initializeRoads(nodes)
             12 1;
             1 13;
             13 5;
+            14 3;
+            10 15;
             ];
 end

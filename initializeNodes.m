@@ -12,5 +12,7 @@ function nodes = initializeNodes()
            50 200;
            50 125;
            50 75;
+           80 50;
+           80 180;
            ];
 end

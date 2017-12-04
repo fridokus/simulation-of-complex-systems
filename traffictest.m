@@ -2,12 +2,14 @@ clear all
 clf
 clc
 
-numberOfIterations = 9000;
+numberOfIterations = 100000;
 
 nodes = initializeNodes();
+parkingNodeIndices = [length(nodes)-1:length(nodes)]
 roads = initializeRoads(nodes);
+parkingRoads = [length(roads) - 1:length(roads)]
 
-cars = initializeCars(nodes, roads);
+cars = initializeCars(nodes, roads)
     
 routes = [1 2 3 4 1 2 3 4 0;1 2 3 4 1 2 3 4 0;1 2 3 4 1 2 3 4 0];
 
@@ -35,12 +37,18 @@ timeStep = 0.1;
 global maxVelocityInIntersection;
 maxVelocityInIntersection = 15;
 
-cars = -sortrows(-cars, [2 1]);
+cars = -sortrows(-cars, [2 1])
 
 for i = 1:numberOfIterations
-  cars = updateCars(cars, nodes, roads,routes);
+  initializedCarIndices = find(sum(cars'));
+  unInitializedCarIndices = find(sum(cars')==0);
+  cars(initializedCarIndices,:) = updateCars(cars(initializedCarIndices,:), nodes, roads,routes);
 
-  plotCoordinates = parameterCoordinates(cars, nodes, roads);
+  plotCoordinates = parameterCoordinates(cars(initializedCarIndices,:), nodes, roads);
+  if ~isempty(unInitializedCarIndices)
+%    roads(unInitializedCarIndices(1),:)
+    cars(unInitializedCarIndices(1),:) = generateNewCars(parkingRoads(1));
+  end
   
 
   velocities = cars(:,currentVelocityIndex);
