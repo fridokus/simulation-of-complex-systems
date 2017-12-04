@@ -7,7 +7,7 @@ function routes = InizilizeRoutes(cars,nodes,roads)
     
     for i = 1:nbrOfCars
         startNode = 1;
-        stopNode = 34;
+        stopNode = 54;
         routes(i,:) = uppdateRoutes(cars,i,routes(i,:),startNode,stopNode,nodes,roads,networkMatrix);
     end
     

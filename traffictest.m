@@ -9,6 +9,7 @@ parkingNodeIndices = [length(nodes)-1:length(nodes)]
 roads = initializeRoads(nodes);
 parkingRoads = [length(roads) - 1:length(roads)]
 
+roads = roads(1:length(roads)-1,:);
 
 cars = initializeCars(nodes, roads);
 

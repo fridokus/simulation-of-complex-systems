@@ -1,6 +1,6 @@
 function path = dijkstrasGetPath(startNode,stopNode,networkMatrix,averageV)
 
-    costMatrix = networkMatrix.*averageV;
+    costMatrix = networkMatrix./averageV;
     nbrNodes = size(costMatrix,1);
     
     distance = ones(1,nbrNodes)*1000000;
@@ -30,6 +30,7 @@ function path = dijkstrasGetPath(startNode,stopNode,networkMatrix,averageV)
     
     while currentNode ~= startNode
         path(end + 1)= currentNode;
+        disp(currentNode)
         currentNode = nodeBefore(currentNode);
     end
     path(end + 1) = currentNode;
