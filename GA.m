@@ -34,7 +34,8 @@ timeBestPath = zeros(1,numberOfGenerations);
 for iGenerations = 1:numberOfGenerations
     %%%%% Calculate fitness values for population and save best value  
     
-    maximumFitness = 0.0;
+    maximumFitness = 0.0;                
+
     bestIndividualIndex = 0;
     for i = 1:populationSize
         path = population(i,:);

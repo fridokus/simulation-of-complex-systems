@@ -11,7 +11,7 @@ function fitness = EvaluatePathTime(path)
     
     while to > 0
         i = i + 1;
-        time = networkMatrix(from,to)*averageV(from,to);
+        time = networkMatrix(from,to)/averageV(from,to);
         fitness = fitness + time;
         from = to;
         to = path(i + 1);

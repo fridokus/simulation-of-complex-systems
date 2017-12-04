@@ -82,13 +82,14 @@ clear all
 clc
 
 networkMatrix = loadNetworkMatrix;
-networkMatrix
+averageV = GetAvregeVelocityOnRoads;
 
-temp = networkMatrix(1,:)
+startNode = 1;
+stopNode = 38;
 
-%%
+path = dijkstrasGetPath(startNode,stopNode,networkMatrix,averageV)
 
-
+PlotBestPath(path,startNode,stopNode)
 
 
 
