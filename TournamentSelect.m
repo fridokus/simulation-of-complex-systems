@@ -1,11 +1,9 @@
 function iSelected = TournamentSelect(fitness,pTournament)
-
     populationSize = length(fitness);
     iTmp1 = 1 + fix(rand*populationSize);
     iTmp2 = 1 + fix(rand*populationSize);
     
     r = rand;
-    
     if (r < pTournament)
         if (fitness(iTmp1) > fitness(iTmp2))
             iSelected = iTmp1;

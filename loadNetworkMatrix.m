@@ -1,9 +1,12 @@
-function networkMatrix = loadNetworkMatrix
-
-    networkMatrix = [1000 15 10 20 1000;
-                    15  1000 5  1000  7;
-                    10  5 1000  5  8;
-                    20  1000 5  1000  9;
-                    1000   7 8  9  1000];
-                
+function networkMatrix = loadNetworkMatrix(nodes, roads)
+    nbrOfNodes = size(nodes, 1);
+    nbrOfRoads = size(roads, 1);
+    networkMatrix = zeros(nbrOfNodes, nbrOfNodes);
+    
+    for i=1:nbrOfRoads
+        startNode = roads(i,1);
+        endNode = roads(i, 2);
+        networkMatrix(startNode, endNode) = 1;
+    end
+    
 end

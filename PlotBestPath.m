@@ -1,8 +1,6 @@
-function PlotBestPath(bestPath,startNode,stopNode)
+function PlotBestPath(bestPath,startNode,stopNode, networkMatrix, nodes)
 
     bestPathPlot = bestPath(1:find(bestPath == stopNode));
-    networkMatrix = loadNetworkMatrix;
-    nodes = xlsread('nodes.xlsx');
     
     figure 
     gplot(networkMatrix,nodes)

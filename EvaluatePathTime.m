@@ -1,9 +1,7 @@
-function fitness = EvaluatePathTime(path)
+function fitness = EvaluatePathTime(path, roads, nodes, networkMatrix)
     
     fitness = 0;
-    networkMatrix = loadNetworkMatrix;
-    nbrNodes = size(networkMatrix,1);
-    averageV = GetAvregeVelocityOnRoads;
+    averageVelocity = getAverageVelocityOnRoads(roads, nodes); %is really path length
     
     i = 1;
     from = path(i);
@@ -11,7 +9,7 @@ function fitness = EvaluatePathTime(path)
     
     while to > 0
         i = i + 1;
-        time = networkMatrix(from,to)*averageV(from,to);
+        time = networkMatrix(from,to)*averageVelocity(from,to);
         fitness = fitness + time;
         from = to;
         to = path(i + 1);

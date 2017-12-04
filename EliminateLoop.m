@@ -2,7 +2,6 @@ function chromosome = EliminateLoop(chromosome)
 
     nbrGenes = length(chromosome);
     i = 2;
-    
     temp = [];
     
     while length(temp) < 1 && i < nbrGenes
@@ -18,7 +17,7 @@ function chromosome = EliminateLoop(chromosome)
         i = i + 1;
     end
     
-    if length(temp) > 0
+    if isempty(temp)
         chromosome = temp;
     end
     
