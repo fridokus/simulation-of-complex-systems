@@ -1,5 +1,6 @@
 function roads = initializeRoads(nodes)
-  in = load('roads.mat');
-  cell1 = struct2cell(in);
-  roads = cell2mat(cell1{1});
+  in = load('RoadsWithOneWay2.mat');
+  cell1 = struct2cell(in)
+  cell2 = cell1{1}
+  roads = cell2mat(cell2{1});
 end
