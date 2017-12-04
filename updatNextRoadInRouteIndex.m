@@ -9,8 +9,10 @@ function cars = updatNextRoadInRouteIndex(cars,routes,roadDecision)
     for i = 1:nbrOfCars
         if (routes(i,cars(i,nextRoadInRouteIndex)) == 0)
             cars(i,nextRoadInRouteIndex) = 1;
+        else
+            cars(i,nextRoadIndex) = routes(i,cars(i,nextRoadInRouteIndex));
         end
-         cars(i,nextRoadIndex) = cars(i,nextRoadIndex)*(1-roadDecision(i)) + routes(i,cars(i,nextRoadInRouteIndex))*(roadDecision(i));
+        
     end
     
 end

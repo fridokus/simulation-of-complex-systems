@@ -37,11 +37,8 @@ global maxVelocityInIntersection;
 maxVelocityInIntersection = 15;
 
 cars(:,positionIndex) = 0;
-routes = InizilizeRoutes(cars,nodes,roads);
-routes(1,:)
-cars(:,roadIndex) = routes(:,1);
-cars(:,nextRoadIndex) = routes(:,2);
-cars(:,nextRoadInRouteIndex) = 2;
+routes = InizilizeRoutes(cars,nodes,roads)
+cars(:,roadIndex) = routes(1)
 
 cars = -sortrows(-cars, [2 1]);
 
@@ -68,6 +65,5 @@ for i = 1:numberOfIterations
   plotRoads(roads, nodes);
   drawnow
   velos(i,:) = velocities;
-  cars
 end
 
