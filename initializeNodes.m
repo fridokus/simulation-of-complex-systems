@@ -1,3 +1,3 @@
 function nodes = initializeNodes()
-  nodes = importdata('nodes.xlsx');
+  nodes = load('nodes.mat');
 end

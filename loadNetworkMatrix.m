@@ -1,9 +1,14 @@
 function networkMatrix = loadNetworkMatrix
 
-    networkMatrix = [1000 15 10 20 1000;
-                    15  1000 5  1000  7;
-                    10  5 1000  5  8;
-                    20  1000 5  1000  9;
-                    1000   7 8  9  1000];
-                
+    roads = load('roads.mat');
+    nodes = load('nodes.mat');
+    networkMatrix = zeros(length(nodes),length(nodes));
+    
+    for i = 1:length(roads)
+        from = roads(i,1);
+        to = roads(i,2);
+        roadLength = norm(nodes(to,:) - nodes(from,:));
+        networkMatrix(from,to) = roadLength;
+    end
+                    
 end

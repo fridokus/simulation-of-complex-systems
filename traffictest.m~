@@ -34,7 +34,7 @@ maxVelocityInIntersection = 15;
 
 routes = InizilizeRoutes(cars,nodes,roads)
 
-%%
+
 cars = -sortrows(-cars, [2 1]);
 nbrOfCars = size(cars, 1);
 velos = ones(numberOfIterations, nbrOfCars);
