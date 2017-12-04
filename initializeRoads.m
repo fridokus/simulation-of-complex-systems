@@ -1,3 +1,3 @@
 function roads = initializeRoads(nodes)
-  roads = importdata('roads.xlsx');
+  roads = fileread('roads.mat');
 end
