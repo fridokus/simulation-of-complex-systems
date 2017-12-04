@@ -86,6 +86,8 @@ global maxVelocityInIntersection;
 maxVelocityInIntersection = 15;
 
 cars = -sortrows(-cars, [2 1]);
+nbrOfCars = size(cars, 1);
+velos = ones(numberOfIterations, nbrOfCars);
 for i = 1:numberOfIterations
   cars = updateCars(cars, nodes, roads,routes);
 
@@ -102,5 +104,13 @@ for i = 1:numberOfIterations
   axis([-10 110 -10 210])
   plotRoads(roads, nodes);
   drawnow
+  velos(i,:) = velocities;
 end
 
+clf
+figure(2)
+plot(linspace(0, i.*0.1, i), velos(:,1), '-.r')
+hold on
+plot(linspace(0, i.*0.1, i), velos(:,2), '-.b')
+plot(linspace(0, i.*0.1, i), velos(:,3), '-.g')
+legend('Car 1', 'Car 2', 'Car 3')

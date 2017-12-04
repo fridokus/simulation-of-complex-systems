@@ -14,7 +14,7 @@ function acceleration = checkCollisionAtIntersection(cars, roads, nodes)
   roadLengths = calculateRoadLength(nodes, roads);
   velocities = cars(:,currentVelocityIndex);
   iVelocitiesTooLow = find(velocities < 0);
-  velocities(iVelocitiesTooLow) = timeStep * cars(iVelocitiesTooLow,maxAccelerationIndex);
+  velocities(iVelocitiesTooLow) = 0.5;
   positions = cars(:,positionIndex);
   
   acceleration = detectIntersection(cars, roads, nodes);
@@ -48,7 +48,7 @@ function acceleration = checkCollisionAtIntersection(cars, roads, nodes)
       [sortedTime, prioritation] = sort(timeUntilIntersection, 'ascend');
       orderOfCarsToIntersection = iCloseCars(prioritation);          % the index of the order of when the cars will reach the intersection
       nbrOfCloseCars = length(orderOfCarsToIntersection);            % nbr of cars close to intersection that need to adjust their velocity
-      time = linspace(sortedTime(1), sortedTime(1)+((nbrOfCloseCars-1) * 5), nbrOfCloseCars)';   %time interval of when the cars should reach the intersection 
+      time = linspace(sortedTime(1), sortedTime(1)+((nbrOfCloseCars-1) * 2), nbrOfCloseCars)';   %time interval of when the cars should reach the intersection 
       acceleration(orderOfCarsToIntersection) = 2*(distanceDiff - velocities(iCloseCars).*time)./time;  % set acceleration based on time interval
     end
     checkedNodes(currentNode) = 1;
