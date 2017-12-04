@@ -16,11 +16,11 @@ function cars = updateCars(cars, nodes, roads, routes)
   
   acceleration = updateAcceleration(cars, nodes, roads);%checkCollision(cars);
   
-  carsAtIntersection = intersection(cars, roadLengths);
+  %carsAtIntersection = intersection(cars, roadLengths);
 
   cars = updateVelocity(cars,acceleration);
   
-  cars = updatePosition(cars,carsAtIntersection,nodes,roads);
-  cars = updatNextRoadInRouteIndex(cars,routes,carsAtIntersection);
+  cars = updatePosition(cars,nodes,roads,routes);
+
   
 end

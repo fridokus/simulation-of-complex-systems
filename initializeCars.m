@@ -1,4 +1,5 @@
 function cars = initializeCars(nodes, roads)
+
   cars = [10  1 20 0 2 -2 3 2 1; 
           21  1 30 0 2 -2 3 2 1;
           22  1 30 0 2 -2 3 2 1;
@@ -36,4 +37,5 @@ function cars = initializeCars(nodes, roads)
           36 10 10 0 2 -2 3 11 1;
           0  11 10 0 2 -2 3 12 1;
           6  11 10 0 2 -2 3 12 1;];
+
 end
