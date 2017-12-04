@@ -5,9 +5,11 @@ clc
 numberOfIterations = 1500;
 
 nodes = initializeNodes();
+parkingNodeIndices = [length(nodes)-1:length(nodes)]
 roads = initializeRoads(nodes);
+parkingRoads = [length(roads) - 1:length(roads)]
 
-cars = initializeCars(nodes, roads);
+cars = initializeCars(nodes, roads)
     
 routes = [1 2 3 4 1 2 3 4 0;1 2 3 4 1 2 3 4 0;1 2 3 4 1 2 3 4 0];
 
@@ -35,14 +37,19 @@ timeStep = 0.1;
 global maxVelocityInIntersection;
 maxVelocityInIntersection = 15;
 
-cars = -sortrows(-cars, [2 1]);
-nbrOfCars = size(cars, 1);
-velos = ones(numberOfIterations, nbrOfCars);
+cars = -sortrows(-cars, [2 1])
+
 for i = 1:numberOfIterations
-  cars = updateCars(cars, nodes, roads,routes);
+  initializedCarIndices = find(sum(cars'));
+  unInitializedCarIndices = find(sum(cars')==0);
+  cars(initializedCarIndices,:) = updateCars(cars(initializedCarIndices,:), nodes, roads,routes);
 
-  plotCoordinates = parameterCoordinates(cars, nodes, roads);
-
+  plotCoordinates = parameterCoordinates(cars(initializedCarIndices,:), nodes, roads);
+  if ~isempty(unInitializedCarIndices)
+%    roads(unInitializedCarIndices(1),:)
+    cars(unInitializedCarIndices(1),:) = generateNewCars(parkingRoads(1));
+  end
+  
   velocities = cars(:,currentVelocityIndex);
   positions = cars(:,positionIndex);
   clf;
@@ -51,16 +58,8 @@ for i = 1:numberOfIterations
   %text(-5, 102, num2str(velocities));
   %text(-5, 10, num2str(positions, 4));
   text(0, 190, strcat('Time: ',num2str(i*timeStep)), 'fontsize', 18);
-  axis([-10 110 -10 210])
   plotRoads(roads, nodes);
   drawnow
   velos(i,:) = velocities;
 end
 
-clf
-figure(2)
-plot(linspace(0, i.*0.1, i), velos(:,1), '-.r')
-hold on
-plot(linspace(0, i.*0.1, i), velos(:,2), '-.b')
-plot(linspace(0, i.*0.1, i), velos(:,3), '-.g')
-legend('Car 1', 'Car 2', 'Car 3')

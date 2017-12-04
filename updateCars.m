@@ -21,6 +21,6 @@ function cars = updateCars(cars, nodes, roads, routes)
   cars = updateVelocity(cars,acceleration);
   
   cars = updatePosition(cars,carsAtIntersection,nodes,roads);
-  %cars = updatNextRoadInRouteIndex(cars,routes,carsAtIntersection);
+%  cars = updatNextRoadInRouteIndex(cars,routes,carsAtIntersection);
   
 end
