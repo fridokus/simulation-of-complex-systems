@@ -1,4 +1,3 @@
-
 function cars = updatePosition(cars,nodes,roads,routes)
     % Uppdate postion and road parameter 
     global positionIndex;
