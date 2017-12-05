@@ -2,7 +2,7 @@ clear all
 clf
 clc
 
-numberOfIterations = 700;
+numberOfIterations = 50;
 
 nodes = initializeNodes();
 %parkingNodeIndices = [length(nodes)-1:length(nodes)];
@@ -80,19 +80,17 @@ for i = 1:numberOfIterations
 % %    roads(unInitializedCarIndices(1),:)
 %     cars(unInitializedCarIndices(1),:) = generateNewCars(parkingRoads(1));
 %   end
-    if mod(i, 5) == 0
-        plotCoordinates = parameterCoordinates(cars(initializedCarIndices,:), nodes, roads);
-        clf;
-        scatter(plotCoordinates(:,1), plotCoordinates(:,2), 'filled')
-        hold on
-        %text(-5, 102, num2str(velocities));
-        %text(-5, 10, num2str(positions, 4));
-        text(0, 190, strcat('Time: ',num2str(i*timeStep)), 'fontsize', 18);
-        %axis([-10 510 -10 510])
-        plotRoads(roads, nodes);
-        %cars(:,currentVelocityIndex)
-        drawnow
-    end
+    
+    plotCoordinates = parameterCoordinates(cars(initializedCarIndices,:), nodes, roads);
+    
+    scatter(plotCoordinates(:,1), plotCoordinates(:,2))
+    hold on
+    %text(-5, 102, num2str(velocities));
+    %text(-5, 10, num2str(positions, 4));
+    %text(0, 190, strcat('Time: ',num2str(i*timeStep)), 'fontsize', 18);
+    %axis([-10 510 -10 510])
+    %plotRoads(roads, nodes);
+    drawnow
 end
 
 
