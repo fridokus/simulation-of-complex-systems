@@ -10,6 +10,7 @@ roads = initializeRoads();
 %parkingRoads = [length(roads) - 1:length(roads)];
 
 roads = roads(1:length(roads)-1,:);
+networkMatrix = loadNetworkMatrix(roads, nodes);
 
 cars = initializeCars(nodes, roads);
 
@@ -45,7 +46,9 @@ cars(:,roadIndex) = routes(:,1);
 cars(:,nextRoadIndex) = routes(:,2);
 cars(:,nextRoadInRouteIndex) = 2;
 
-cars = -sortrows(-cars, [2 1]);
+[cars, order] = sortrows(-cars, [2 1]);
+cars = -cars;
+routes = routes(order,:);
 
 
 % savePosition = zeros(nbrOfCars,numberOfIterations);
@@ -64,7 +67,7 @@ for i = 1:numberOfIterations
   nIteration = nIteration + 1;
   initializedCarIndices = find(sum(cars'));
   unInitializedCarIndices = find(sum(cars')==0);
-  cars(initializedCarIndices,:) = updateCars(cars(initializedCarIndices,:), nodes, roads,routes);
+  cars(initializedCarIndices,:) = updateCars(cars(initializedCarIndices,:), nodes, roads,routes, networkMatrix);
 %   
 %   savePosition = savePositions(cars, nIteration, savePosition);
 %   saveRoad = saveRoads(cars, nIteration, saveRoad);

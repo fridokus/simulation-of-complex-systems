@@ -1,6 +1,6 @@
 function cars = initializeCars(nodes, roads)
 
-  cars = [10  1 20 0 2 -2 3 2 1; 
+  cars = [10  1 10 0 2 -2 3 2 1; 
           21  1 30 0 2 -2 3 2 1;
           22  1 30 0 2 -2 3 2 1;
           36  1 30 0 2 -2 3 2 1;

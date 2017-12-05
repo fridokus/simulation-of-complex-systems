@@ -6,5 +6,7 @@ function coordinates = parameterCoordinates(cars, nodes, roads)
   endPoints = [nodes(roads(:,roadIndex)), nodes(roads(:,roadIndex) + numberOfNodes)];
   directionVectors =  endPoints - startingPoints;
   roadLengths = calculateRoadLength(nodes, roads);
+  cars(:,roadIndex)
+  cars(:,positionIndex)
   coordinates = startingPoints(cars(:,roadIndex),:) + cars(:,positionIndex)./roadLengths(cars(:,roadIndex)) .* directionVectors(cars(:,roadIndex),:);
 end
