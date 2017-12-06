@@ -71,7 +71,7 @@ for i = 1:numberOfIterations
   if ~isempty(unInitializedCarIndices)
     size(cars(unInitializedCarIndices(1),:));
     size(routes(unInitializedCarIndices(1),:));
-    [routes(unInitializedCarIndices(1),:) cars(unInitializedCarIndices(1),:)] = generateNewCars(48, 56, nodes, roads, length(unInitializedCarIndices));
+    [routes(unInitializedCarIndices(1),:) cars(unInitializedCarIndices(1),:)] = generateNewCars(55, 56, nodes, roads, length(unInitializedCarIndices));
     cars(unInitializedCarIndices(1), roadIndex) = routes(unInitializedCarIndices(1),1);
     cars(unInitializedCarIndices(1), nextRoadIndex) = routes(unInitializedCarIndices(1),2);
     cars(unInitializedCarIndices(1), nextRoadInRouteIndex) = 2;
@@ -84,12 +84,11 @@ for i = 1:numberOfIterations
     
     if mod(i, 5) == 0
         plotCoordinates = parameterCoordinates(cars(initializedCarIndices,:), nodes, roads);
-        plotCoordinatesRandom = parameterCoordinates(cars(randomCarIndices,:), nodes, roads);
+        plotCoordinates = parameterCoordinates(cars(randomCarIndices,:), nodes, roads);
         clf;
         scatter(plotCoordinates(:,1), plotCoordinates(:,2), 'filled')
         hold on
-        scatter(plotCoordinatesRandom(:,1), plotCoordinatesRandom(:,2), 'filled','red')
-        hold on 
+        scatter(plotCoordinates(:,1), plotCoordinates(:,2), 'filled','')
         text(0, 190, strcat('Time: ',num2str(i*timeStep)), 'fontsize', 18);
         axis([-10, xmax+50, -10, ymax + 50])
         plotRoads(roads, nodes);
