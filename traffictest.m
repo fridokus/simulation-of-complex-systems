@@ -9,9 +9,10 @@ xmax = max(nodes(:,1));
 ymax = max(nodes(:,2));
 roads = initializeRoads();
 
-numberOfRandomCars = 80;
+numberOfRandomCars = 150;
+numberOfCars = 300
 
-cars = initializeCars(nodes, roads, numberOfRandomCars);
+cars = initializeCars(nodes, roads, numberOfCars, numberOfRandomCars);
 
 global positionIndex;
 positionIndex = 1;
