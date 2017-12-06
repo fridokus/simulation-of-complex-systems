@@ -59,7 +59,6 @@ cars(initializedCarIndices,nextRoadInRouteIndex) = 2;
 
 [cars routes] = sortwrapper(cars, routes);
 
-cars
 
 for i = 1:numberOfIterations
   nIteration = nIteration + 1;
@@ -67,8 +66,6 @@ for i = 1:numberOfIterations
   unInitializedCarIndices = find(sum(cars')==0);
   [cars(initializedCarIndices,:) routes(initializedCarIndices,:)] = updateCars(cars(initializedCarIndices,:), nodes, roads,routes(initializedCarIndices,:));
   initializedCarIndices = find(sum(cars'));
-  
-  cars(:,currentVelocityIndex);
 
   if ~isempty(unInitializedCarIndices)
     size(cars(unInitializedCarIndices(1),:));
@@ -82,9 +79,7 @@ for i = 1:numberOfIterations
 
   initializedCarIndices = find(0<sum(cars') & sum(cars')<1e7);
   parkedCarIndices = find( sum(cars')<1e7);
-  
-
-  
+    
     if mod(i, 5) == 0
         plotCoordinates = parameterCoordinates(cars(initializedCarIndices,:), nodes, roads);
         clf;

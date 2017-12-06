@@ -30,7 +30,7 @@ function cars = updatePosition(cars,nodes,roads,routes)
     cars(:,positionIndex) = newPosition;
     cars(:,roadIndex) = nextRoad.*roadDecision +(1-roadDecision).*currentRoad;
     
-    cars = updatNextRoadInRouteIndex(cars,routes,roadDecision);
+    cars = updatNextRoadInRouteIndex(cars,routes,roadDecision, roads);
     
     
     

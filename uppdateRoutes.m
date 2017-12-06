@@ -17,8 +17,6 @@ function route = uppdateRoutes(cars,uppdateCarNbr,route,startNode,stopNode,nodes
     route = zeros(1,length(temproute));
     route(1:nextRoadInRouteIndex) = temproute((1:nextRoadInRouteIndex));
     route(cars(uppdateCarNbr,nextRoadInRouteIndex):cars(uppdateCarNbr,nextRoadInRouteIndex)-1+length(pathRoad)) = pathRoad;
-   
-  
     
 end
     
