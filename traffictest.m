@@ -65,7 +65,7 @@ for i = 1:numberOfIterations
   [cars(initializedCarIndices,:) routes(initializedCarIndices,:)] = updateCars(cars(initializedCarIndices,:), nodes, roads,routes(initializedCarIndices,:));
   initializedCarIndices = find(sum(cars'));
   
-  cars(:,currentVelocityIndex)
+  cars(:,currentVelocityIndex);
 
   if ~isempty(unInitializedCarIndices)
     size(cars(unInitializedCarIndices(1),:));
