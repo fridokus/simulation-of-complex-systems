@@ -5,7 +5,8 @@ clc
 numberOfIterations = 7000;
 
 nodes = initializeNodes();
-
+xmax = max(nodes(:,1));
+ymax = max(nodes(:,2));
 roads = initializeRoads();
 
 numberOfRandomCars = 80;
@@ -84,12 +85,9 @@ for i = 1:numberOfIterations
         clf;
         scatter(plotCoordinates(:,1), plotCoordinates(:,2), 'filled')
         hold on
-        %text(-5, 102, num2str(velocities));
-        %text(-5, 10, num2str(positions, 4));
         text(0, 190, strcat('Time: ',num2str(i*timeStep)), 'fontsize', 18);
-        %axis([-10 510 -10 510])
+        axis([-10, xmax+50, -10, ymax + 50])
         plotRoads(roads, nodes);
-        %cars(:,currentVelocityIndex)
         drawnow
     end
 end
