@@ -2,14 +2,15 @@ clear all
 clf
 clc
 
-numberOfIterations = 700;
+numberOfIterations = 7000;
 
 nodes = initializeNodes();
 
 roads = initializeRoads();
 
-cars = initializeCars(nodes, roads);
-cars = -sortrows(-cars, [2 1]);
+numberOfRandomCars = 80;
+
+cars = initializeCars(nodes, roads, numberOfRandomCars);
 
 global positionIndex;
 positionIndex = 1;
@@ -58,6 +59,8 @@ cars(initializedCarIndices,nextRoadInRouteIndex) = 2;
 
 [cars routes] = sortwrapper(cars, routes);
 
+cars
+
 for i = 1:numberOfIterations
   nIteration = nIteration + 1;
   initializedCarIndices = find(0<sum(cars') & sum(cars')<1e7);
@@ -76,16 +79,12 @@ for i = 1:numberOfIterations
     cars(unInitializedCarIndices(1), nextRoadInRouteIndex) = 2;
     [cars routes] = sortwrapper(cars, routes);
   end
-%  unInitializedCarIndices = find(sum(cars')==0);
+
   initializedCarIndices = find(0<sum(cars') & sum(cars')<1e7);
   parkedCarIndices = find( sum(cars')<1e7);
   
 
   
-%   if ~isempty(unInitializedCarIndices)
-% %    roads(unInitializedCarIndices(1),:)
-%     cars(unInitializedCarIndices(1),:) = generateNewCars(parkingRoads(1));
-%   end
     if mod(i, 5) == 0
         plotCoordinates = parameterCoordinates(cars(initializedCarIndices,:), nodes, roads);
         clf;
