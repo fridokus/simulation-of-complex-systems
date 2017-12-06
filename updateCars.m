@@ -11,7 +11,7 @@ function [cars routes] = updateCars(cars, nodes, roads, routes)
   global nextRoadInRouteIndex;
 
 
-  [cars routes]= sortwrapper(cars, routes)
+  [cars routes]= sortwrapper(cars, routes);
   roadLengths = calculateRoadLength(nodes, roads);
   
   acceleration = updateAcceleration(cars, nodes, roads);%checkCollision(cars);

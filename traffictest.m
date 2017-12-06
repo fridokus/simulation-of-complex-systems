@@ -40,13 +40,7 @@ nbrOfCars = size(cars, 1);
 
 initializedCarIndices = find(sum(cars'));
 unInitializedCarIndices = find(sum(cars')==0);
-cars(:,positionIndex) = 0;
-routes = InizilizeRoutes(cars,nodes,roads);
-cars(:,roadIndex) = routes(:,1);
-cars(:,nextRoadIndex) = routes(:,2);
-cars(:,nextRoadInRouteIndex) = 2;
 
-cars = -sortrows(-cars, [2 1]);
 
 
 % savePosition = zeros(nbrOfCars,numberOfIterations);
@@ -74,8 +68,8 @@ for i = 1:numberOfIterations
   initializedCarIndices = find(sum(cars'));
 
   if ~isempty(unInitializedCarIndices)
-    size(cars(unInitializedCarIndices(1),:))
-    size(routes(unInitializedCarIndices(1),:))
+    size(cars(unInitializedCarIndices(1),:));
+    size(routes(unInitializedCarIndices(1),:));
     [routes(unInitializedCarIndices(1),:) cars(unInitializedCarIndices(1),:)] = generateNewCars(55, 56, nodes, roads, length(unInitializedCarIndices));
     cars(unInitializedCarIndices(1), roadIndex) = routes(unInitializedCarIndices(1),1);
     cars(unInitializedCarIndices(1), nextRoadIndex) = routes(unInitializedCarIndices(1),2);
