@@ -1,0 +1,8 @@
+function cars = updateRoutesCars(cars,roadDecision,nodes,roads)
+    
+    networkMatrix = loadNetworkMatrix(roads,nodes);
+    nbrCars = size(cars,1);
+    
+    for i = 1:nbrCars
+        if 
+        route = uppdateRoutes(cars,i,route,startNode,stopNode,nodes,roads,networkMatrix);

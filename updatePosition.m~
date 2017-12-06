@@ -24,7 +24,7 @@ function cars = updatePosition(cars,nodes,roads,routes)
     
     roadDecision = distanceTraveled > lengthOldRoad;
     
-    routes = updateRoutesCars(cars,routes,roadDecision,nodes,roads);
+    cars = updateRoutesCars(cars,roadDecision);
     
     newPosition = oldPosition + timeStep*velocity -roadDecision.*lengthOldRoad;
     cars(:,positionIndex) = newPosition;

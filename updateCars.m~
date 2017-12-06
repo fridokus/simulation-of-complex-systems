@@ -1,5 +1,5 @@
 
-function [cars routes] = updateCars(cars, nodes, roads, routes)
+function cars = updateCars(cars, nodes, roads, routes)
   global positionIndex;
   global roadIndex;
   global maxVelocityIndex;
@@ -11,7 +11,7 @@ function [cars routes] = updateCars(cars, nodes, roads, routes)
   global nextRoadInRouteIndex;
 
 
-  [cars routes]= sortwrapper(cars, routes);
+  cars = -sortrows(-cars, [2 1]);
   roadLengths = calculateRoadLength(nodes, roads);
   
   acceleration = updateAcceleration(cars, nodes, roads);%checkCollision(cars);
@@ -21,6 +21,11 @@ function [cars routes] = updateCars(cars, nodes, roads, routes)
   cars = updateVelocity(cars,acceleration);
   
   cars = updatePosition(cars,nodes,roads,routes);
-
+    
+  route = routes(1,:);
+  startNode = roads(cars(1,roadIndex),2);
+  index = find(route == 0)
+  stopNode = roads(route(index(1)),2);
+  route = uppdateRoutes(cars,1,route,startNode,stopNode,nodes,roads,networkMatrix)
   
 end
