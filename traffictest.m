@@ -48,11 +48,7 @@ cars(:,nextRoadIndex) = routes(:,2);
 cars(:,nextRoadInRouteIndex) = 2;
 
 cars = -sortrows(-cars, [2 1]);
-<<<<<<< HEAD
 
-=======
-% 
->>>>>>> parent of ee13d77... Different speed limits on roads, and adjusts acceleration to the speedlimit
 % savePosition = zeros(nbrOfCars,numberOfIterations);
 % saveRoad = zeros(nbrOfCars,numberOfIterations);
 % saveMaxVelocity = zeros(nbrOfCars,numberOfIterations);
