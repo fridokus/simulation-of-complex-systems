@@ -8,10 +8,7 @@ function acceleration = updateAcceleration(cars, nodes, roads)
   
   accelerationCollision = checkCollision(cars, nodes, roads);
   accelerationIntersection = checkCollisionAtIntersection(cars, roads, nodes);
-  accelerationSpeedLimit = checkSpeedLimit(cars, roads);
   acceleration = min(accelerationIntersection, accelerationCollision);
-  acceleration = min(acceleration, accelerationSpeedLimit);
-
   %tooFastIndices = find(cars((cars(:,currentVelocityIndex) >= cars(:, maxVelocityIndex))));
   %acceleration(tooFastIndices) = -cars(tooFastIndices, maxDeaccelerationIndex);
 end

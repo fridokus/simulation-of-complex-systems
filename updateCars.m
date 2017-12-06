@@ -1,4 +1,3 @@
-
 function cars = updateCars(cars, nodes, roads, routes, networkMatrix)
       global positionIndex;
       global roadIndex;
@@ -10,11 +9,7 @@ function cars = updateCars(cars, nodes, roads, routes, networkMatrix)
       global nextRoadIndex;
       global nextRoadInRouteIndex;
 
-
-
-      [cars, order] = sortrows(-cars, [2 1]);
-      cars = -cars;
-      routes = routes(order,:);
+      cars = -sortrows(-cars, [2 1]);
       roadLengths = calculateRoadLength(nodes, roads);
 
       acceleration = updateAcceleration(cars, nodes, roads);%checkCollision(cars);

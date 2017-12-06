@@ -46,5 +46,4 @@ function acceleration = checkCollision(cars, nodes, roads)
      end
     end
   end
-  
 end

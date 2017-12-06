@@ -6,8 +6,6 @@ function cars = updatNextRoadInRouteIndex(cars,routes,roadDecision)
     nbrOfCars = size(cars,1);
     cars(:,nextRoadInRouteIndex) = cars(:,nextRoadInRouteIndex) + roadDecision;
     
-    replace = routes(:,cars(:,nextRoadInRouteIndex)) == 0; 
-    
     for i = 1:nbrOfCars
         if (routes(i,cars(i,nextRoadInRouteIndex)) == 0)
             cars(i,nextRoadInRouteIndex) = 1;

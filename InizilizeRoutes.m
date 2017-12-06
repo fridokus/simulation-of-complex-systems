@@ -6,8 +6,8 @@ function routes = InizilizeRoutes(cars,nodes,roads)
     
     nbrOfNodes = size(nodes, 1);
     for i = 1:nbrOfCars
-        startNode = randi(nbrOfNodes);
-        stopNode = randi(nbrOfNodes);
+        startNode = 1;
+        stopNode = 54;
         while stopNode == startNode
             stopNode = randi(nbrOfNodes);
         end
