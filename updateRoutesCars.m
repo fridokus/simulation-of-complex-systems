@@ -6,7 +6,7 @@ function routes = updateRoutesCars(cars,routes,roadDecision,nodes,roads)
     nbrCars = size(cars,1);
     
     for i = 1:nbrCars
-        if roadDecision(i) == 1
+        if roadDecision(i) == 1 && routes(i,end) ~= -1
            route = routes(i,:);
            startNode = roads(cars(i,roadIndex),2);
            index = find(route == 0);
