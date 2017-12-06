@@ -25,5 +25,4 @@ function plotRoads(roads, nodes)
     plot([startNode(1), endNode(1)], [startNode(2), endNode(2)], '-.k');
     hold on
   end
-  axis([-10, 510, -10, 510])
 end
