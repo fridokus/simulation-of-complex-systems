@@ -2,7 +2,7 @@ function averageV = getAvregeVMatrix(carsV,carsR,nodes,roads)
    
     averageV = zeros(length(nodes),length(nodes));
     nbrRoads = length(roads);
-    maxVAtRoad = ones(1,nbrRoads)*50;
+    maxVAtRoad = roads(:,3);
     s = 1;
     vAtRoad = zeros(1,nbrRoads);
     

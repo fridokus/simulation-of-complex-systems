@@ -2,12 +2,11 @@ clear all
 clf
 clc
 
-numberOfIterations = 1500;
+numberOfIterations = 700;
 
 nodes = initializeNodes();
-roads = initializeRoads(nodes);
 
-roads = roads(1:length(roads)-1,:);
+roads = initializeRoads();
 
 cars = initializeCars(nodes, roads);
 cars = -sortrows(-cars, [2 1]);
@@ -41,6 +40,16 @@ nbrOfCars = size(cars, 1);
 initializedCarIndices = find(sum(cars'));
 unInitializedCarIndices = find(sum(cars')==0);
 
+% savePosition = zeros(nbrOfCars,numberOfIterations);
+% saveRoad = zeros(nbrOfCars,numberOfIterations);
+% saveMaxVelocity = zeros(nbrOfCars,numberOfIterations);
+% saveCurrentVelocity = zeros(nbrOfCars,numberOfIterations);
+% saveMaxAcceleration = zeros(nbrOfCars,numberOfIterations);
+% saveMaxDeacceleration = zeros(nbrOfCars,numberOfIterations);
+% saveVision = zeros(nbrOfCars,numberOfIterations);
+% saveNextRoad = zeros(nbrOfCars,numberOfIterations);
+
+
 cars(:,positionIndex) = 0;
 routes = InizilizeRoutes(cars(initializedCarIndices,:),nodes,roads, 56, 55, length(unInitializedCarIndices));
 cars(initializedCarIndices,roadIndex) = routes(initializedCarIndices,1);
@@ -55,6 +64,8 @@ for i = 1:numberOfIterations
   unInitializedCarIndices = find(sum(cars')==0);
   [cars(initializedCarIndices,:) routes(initializedCarIndices,:)] = updateCars(cars(initializedCarIndices,:), nodes, roads,routes(initializedCarIndices,:));
   initializedCarIndices = find(sum(cars'));
+  
+  cars(:,currentVelocityIndex)
 
   if ~isempty(unInitializedCarIndices)
     size(cars(unInitializedCarIndices(1),:));
@@ -69,17 +80,24 @@ for i = 1:numberOfIterations
   initializedCarIndices = find(0<sum(cars') & sum(cars')<1e7);
   parkedCarIndices = find( sum(cars')<1e7);
   
-  plotCoordinates = parameterCoordinates(cars(initializedCarIndices,:), nodes, roads);
 
-  velocities = cars(:,currentVelocityIndex);
-  positions = cars(:,positionIndex);
-  clf;
-  scatter(plotCoordinates(:,1), plotCoordinates(:,2), 'filled')
-  hold on
-  text(0, 190, strcat('Time: ',num2str(i*timeStep)), 'fontsize', 18);
-
-  axis([-10 510 -10 510])
-  plotRoads(roads, nodes);
-  drawnow
-  velos(i,:) = velocities;
+  
+%   if ~isempty(unInitializedCarIndices)
+% %    roads(unInitializedCarIndices(1),:)
+%     cars(unInitializedCarIndices(1),:) = generateNewCars(parkingRoads(1));
+%   end
+    if mod(i, 5) == 0
+        plotCoordinates = parameterCoordinates(cars(initializedCarIndices,:), nodes, roads);
+        clf;
+        scatter(plotCoordinates(:,1), plotCoordinates(:,2), 'filled')
+        hold on
+        %text(-5, 102, num2str(velocities));
+        %text(-5, 10, num2str(positions, 4));
+        text(0, 190, strcat('Time: ',num2str(i*timeStep)), 'fontsize', 18);
+        %axis([-10 510 -10 510])
+        plotRoads(roads, nodes);
+        %cars(:,currentVelocityIndex)
+        drawnow
+    end
 end
+
