@@ -56,7 +56,6 @@ routes = InizilizeRoutes(cars(initializedCarIndices,:),nodes,roads, 56, 55, leng
 cars(initializedCarIndices,roadIndex) = routes(initializedCarIndices,1);
 cars(initializedCarIndices,nextRoadIndex) = routes(initializedCarIndices,2);
 cars(initializedCarIndices,nextRoadInRouteIndex) = 2;
-
 [cars routes] = sortwrapper(cars, routes);
 
 
