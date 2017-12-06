@@ -37,11 +37,8 @@ maxVelocityInIntersection = 15;
 nIteration = 0;
 nbrOfCars = size(cars, 1);
 
-
 initializedCarIndices = find(sum(cars'));
 unInitializedCarIndices = find(sum(cars')==0);
-
-
 
 % savePosition = zeros(nbrOfCars,numberOfIterations);
 % saveRoad = zeros(nbrOfCars,numberOfIterations);
@@ -66,6 +63,8 @@ for i = 1:numberOfIterations
   unInitializedCarIndices = find(sum(cars')==0);
   [cars(initializedCarIndices,:) routes(initializedCarIndices,:)] = updateCars(cars(initializedCarIndices,:), nodes, roads,routes(initializedCarIndices,:));
   initializedCarIndices = find(sum(cars'));
+  
+  cars(:,currentVelocityIndex)
 
   if ~isempty(unInitializedCarIndices)
     size(cars(unInitializedCarIndices(1),:));

@@ -12,11 +12,11 @@ function acceleration = checkSpeedLimit(cars, roads)
     speedLimits = roads(:,3);
     speedLimitPerCar = speedLimits(currentRoads);
     
-    acceleration = (speedLimitPerCar - velocities) / timeStep;
+    acceleration = (speedLimitPerCar - velocities) / timeStep
     
-    iTooFastAcceleration = find(acceleration > maxAccelerations);
-    iTooSlowAcceleration = find(acceleration < maxDeaccelerations);
+    iTooFastAcceleration = find(acceleration > maxAccelerations)
+    iTooSlowAcceleration = find(acceleration < maxDeaccelerations)
     acceleration(iTooFastAcceleration) = maxAccelerations(iTooFastAcceleration);
     acceleration(iTooSlowAcceleration) = maxDeaccelerations(iTooSlowAcceleration);
-    
+    acceleration
 end

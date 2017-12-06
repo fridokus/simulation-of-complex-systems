@@ -1,4 +1,3 @@
-
 function [cars routes] = updateCars(cars, nodes, roads, routes)
   global positionIndex;
   global roadIndex;
