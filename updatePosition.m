@@ -33,6 +33,8 @@ function cars = updatePosition(cars,nodes,roads,routes)
     cars = updatNextRoadInRouteIndex(cars,routes,roadDecision);
     
     
+    
+    
 end
 
 
