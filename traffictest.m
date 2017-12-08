@@ -69,7 +69,7 @@ cars(initializedCarIndices,nextRoadInRouteIndex) = 2;
 
 for i = 1:numberOfIterations
   nIteration = nIteration + 1;
-  initializedCarIndices = find(0<sum(cars') & sum(cars')<1e7);
+  initializedCarIndices = find(cars(:,roadIndex)>0);
   unInitializedCarIndices = find(sum(cars')==0);
   [cars(initializedCarIndices,:) routes(initializedCarIndices,:)] = updateCars(cars(initializedCarIndices,:), nodes, roads,routes(initializedCarIndices,:));
   initializedCarIndices = find(sum(cars'));
@@ -77,16 +77,16 @@ for i = 1:numberOfIterations
   if ~isempty(unInitializedCarIndices)
     size(cars(unInitializedCarIndices(1),:));
     size(routes(unInitializedCarIndices(1),:));
-    [routes(unInitializedCarIndices(1),:) cars(unInitializedCarIndices(1),:)] = generateNewCars(34, 56, nodes, roads, length(unInitializedCarIndices));
+    [routes(unInitializedCarIndices(1),:) cars(unInitializedCarIndices(1),:)] = generateNewCars(48, 56, nodes, roads, length(unInitializedCarIndices));
     cars(unInitializedCarIndices(1), roadIndex) = routes(unInitializedCarIndices(1),1);
     cars(unInitializedCarIndices(1), nextRoadIndex) = routes(unInitializedCarIndices(1),2);
     cars(unInitializedCarIndices(1), nextRoadInRouteIndex) = 1;
     [cars routes] = sortwrapper(cars, routes);
   end
 
-  initializedCarIndices = find(0<sum(cars') & sum(cars')<1e7);
+  initializedCarIndices = find(cars(:,roadIndex)>0);
   randomCarIndices = find(routes(:,end) == -1);
-  parkedCarIndices = find( sum(cars')<1e7);
+  parkedCarIndices = find(cars(:,roadIndex) == 0);
   targetCarIndies = find(routes(:,end) ~= -1);
   %plotRoute = routes(target) 
     
