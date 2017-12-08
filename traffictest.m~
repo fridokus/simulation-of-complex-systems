@@ -15,8 +15,8 @@ roads(144,3) = 10;
 roads(133,3) = 15;
 roads(134,3) = 15;
 
-numberOfRandomCars =10;
-numberOfCars = 20;
+numberOfRandomCars =100;
+numberOfCars = 101;
 
 cars = initializeCars(nodes, roads, numberOfCars, numberOfRandomCars);
 
@@ -77,10 +77,10 @@ for i = 1:numberOfIterations
   if ~isempty(unInitializedCarIndices)
     size(cars(unInitializedCarIndices(1),:));
     size(routes(unInitializedCarIndices(1),:));
-    [routes(unInitializedCarIndices(1),:) cars(unInitializedCarIndices(1),:)] = generateNewCars(34, 56, nodes, roads, length(unInitializedCarIndices));
+    [routes(unInitializedCarIndices(1),:) cars(unInitializedCarIndices(1),:)] = generateNewCars(, 56, nodes, roads, length(unInitializedCarIndices));
     cars(unInitializedCarIndices(1), roadIndex) = routes(unInitializedCarIndices(1),1);
     cars(unInitializedCarIndices(1), nextRoadIndex) = routes(unInitializedCarIndices(1),2);
-    cars(unInitializedCarIndices(1), nextRoadInRouteIndex) = 1;
+    cars(unInitializedCarIndices(1), nextRoadInRouteIndex) = 2;
     [cars routes] = sortwrapper(cars, routes);
   end
 
