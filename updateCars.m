@@ -19,7 +19,7 @@ function [cars routes] = updateCars(cars, nodes, roads, routes)
 
   cars = updateVelocity(cars,acceleration);
   
-  cars = updatePosition(cars,nodes,roads,routes);
+  [cars, routes] = updatePosition(cars,nodes,roads,routes);
 
   
 end

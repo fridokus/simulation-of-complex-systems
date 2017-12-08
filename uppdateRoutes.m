@@ -10,8 +10,8 @@ function [route,costMatrix] = uppdateRoutes(cars,uppdateCarNbr,route,startNode,s
     averageV = getAvregeVMatrix(carsV,carsR,nodes,roads);
 
     [path,costMatrix] = dijkstrasGetPath(startNode,stopNode,networkMatrix,averageV);
-    
-    pathRoad = fromNodeToRoad(path,roads)
+
+    pathRoad = fromNodeToRoad(path,roads);
     
 %     temproute = route;
     route = zeros(1,length(route));

@@ -1,11 +1,10 @@
-function [cars, routes] = updatePosition(cars,nodes,roads,routes)
+function cars = updatePosition(cars,nodes,roads,routes)
     % Uppdate postion and road parameter 
     global positionIndex;
     global currentVelocityIndex;
     global roadIndex;
     global nextRoadIndex;
     global timeStep;
-    global nextRoadInRouteIndex;
    
 %     needNewRoads = find(cars(:,roadIndex) == cars(:,nextRoadIndex));
 %     for i=1:length(needNewRoads)
@@ -25,18 +24,20 @@ function [cars, routes] = updatePosition(cars,nodes,roads,routes)
     
     roadDecision = distanceTraveled > lengthOldRoad;
     
-    [routes, cars] = updateRoutesCars(cars,routes,roadDecision,nodes,roads);
+    routes = updateRoutesCars(cars,routes,roadDecision,nodes,roads);
     
-    [cars, routes] = updatNextRoadInRouteIndex(cars,routes,roadDecision, roads);
+    cars = updatNextRoadInRouteIndex(cars,routes,roadDecision, roads);
     
     nextRoad = cars(:,nextRoadIndex);
     newPosition = oldPosition + timeStep*velocity -roadDecision.*lengthOldRoad;
     cars(:,positionIndex) = newPosition;
-    if sum(roadDecision) > 0
-        
-        routes
-    end
+    cars(:,nextRoadInRouteIndex) = 1
     cars(:,roadIndex) = nextRoad.*roadDecision +(1-roadDecision).*currentRoad;
+    
+    
+    
+    
+    
     
 end
 

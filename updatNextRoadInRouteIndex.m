@@ -1,4 +1,4 @@
-function cars = updatNextRoadInRouteIndex(cars,routes,roadDecision, roads)
+function [cars, routes] = updatNextRoadInRouteIndex(cars,routes,roadDecision, roads)
 
     global nextRoadInRouteIndex;
     global nextRoadIndex;
