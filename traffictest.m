@@ -8,9 +8,15 @@ nodes = initializeNodes();
 xmax = max(nodes(:,1));
 ymax = max(nodes(:,2));
 roads = initializeRoads();
+roads(125,3) = 42;
+roads(126,3) = 42;
+roads(149,3) = 10;
+roads(144,3) = 10;
+roads(133,3) = 15;
+roads(134,3) = 15;
 
-numberOfRandomCars = 100;
-numberOfCars = 200;
+numberOfRandomCars =0;
+numberOfCars = 2;
 
 cars = initializeCars(nodes, roads, numberOfCars, numberOfRandomCars);
 
@@ -35,7 +41,7 @@ nextRoadInRouteIndex = 9;
 global timeStep;
 timeStep = 0.1;
 global maxVelocityInIntersection;
-maxVelocityInIntersection = 5;
+maxVelocityInIntersection = 2;
 
 nIteration = 0;
 nbrOfCars = size(cars, 1);
@@ -81,6 +87,8 @@ for i = 1:numberOfIterations
   initializedCarIndices = find(0<sum(cars') & sum(cars')<1e7);
   randomCarIndices = find(routes(:,end) == -1);
   parkedCarIndices = find( sum(cars')<1e7);
+  targetCarIndies = find(routes(:,end) ~= -1);
+  %plotRoute = routes(target) 
     
     if mod(i, 5) == 0
         plotCoordinates = parameterCoordinates(cars(initializedCarIndices,:), nodes, roads);

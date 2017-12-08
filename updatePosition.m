@@ -16,7 +16,7 @@ function cars = updatePosition(cars,nodes,roads,routes)
     oldPosition = cars(:,positionIndex);
     velocity = cars(:,currentVelocityIndex);
     currentRoad = cars(:,roadIndex);
-    nextRoad = cars(:,nextRoadIndex);
+    
     distVector = nodes(roads(currentRoad,1),:)-nodes(roads(currentRoad,2),:);
     lengthOldRoad = sqrt(distVector(:,1).^2+distVector(:,2).^2); 
 
@@ -26,11 +26,15 @@ function cars = updatePosition(cars,nodes,roads,routes)
     
     routes = updateRoutesCars(cars,routes,roadDecision,nodes,roads);
     
+    cars = updatNextRoadInRouteIndex(cars,routes,roadDecision, roads);
+    
+    nextRoad = cars(:,nextRoadIndex);
+    
     newPosition = oldPosition + timeStep*velocity -roadDecision.*lengthOldRoad;
     cars(:,positionIndex) = newPosition;
     cars(:,roadIndex) = nextRoad.*roadDecision +(1-roadDecision).*currentRoad;
     
-    cars = updatNextRoadInRouteIndex(cars,routes,roadDecision, roads);
+    
     
     
     

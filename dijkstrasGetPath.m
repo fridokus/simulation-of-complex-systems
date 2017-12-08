@@ -1,4 +1,4 @@
-function path = dijkstrasGetPath(startNode,stopNode,networkMatrix,averageV)
+function [path,costMatrix] = dijkstrasGetPath(startNode,stopNode,networkMatrix,averageV)
 
     costMatrix = networkMatrix.*averageV;
     nbrNodes = size(costMatrix,1);
@@ -6,6 +6,7 @@ function path = dijkstrasGetPath(startNode,stopNode,networkMatrix,averageV)
     
     queue = [];
     visited = [];
+    nodeBefore = [];
     queue(1) = startNode;
     tmp_distance(startNode) = 0.0;
     
@@ -13,14 +14,14 @@ function path = dijkstrasGetPath(startNode,stopNode,networkMatrix,averageV)
        [~, iNextNode] =  min(tmp_distance(queue));
        shortestDistanceNode = queue(iNextNode(1));
        visited(length(visited) + 1) = shortestDistanceNode;
-       queue(iNextNode) = [];
-       neighbouringNodes = find(networkMatrix(shortestDistanceNode,:) ~= 0);
+       queue(iNextNode(1)) = [];
+       neighbouringNodes = find(costMatrix(shortestDistanceNode,:) ~= 0);
        for j=1:length(neighbouringNodes)
            neighbourNode = neighbouringNodes(j);
            newDistance = tmp_distance(shortestDistanceNode) + costMatrix(shortestDistanceNode,neighbourNode);
            if newDistance < tmp_distance(neighbourNode) && ~ismember(neighbourNode, visited)
               tmp_distance(neighbourNode) = newDistance;
-              queue(length(queue) + 1) = neighbourNode;
+              queue(end + 1) = neighbourNode;
               nodeBefore(neighbourNode) = shortestDistanceNode;
            end
        end

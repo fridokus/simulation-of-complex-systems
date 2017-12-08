@@ -2,7 +2,6 @@ function routes = updateRoutesCars(cars,routes,roadDecision,nodes,roads)
     
     global roadIndex;
     global nextRoadInRouteIndex; 
-    global nextRoadIndex;
     
     networkMatrix = loadNetworkMatrix(roads,nodes);
     nbrCars = size(cars,1);
@@ -15,8 +14,7 @@ function routes = updateRoutesCars(cars,routes,roadDecision,nodes,roads)
            stopNode = roads(route(index(1)-1),2);
            [route,costMatrix] = uppdateRoutes(cars,i,route,startNode,stopNode,nodes,roads,networkMatrix);
            routes(i,:) = route;
-           cars(i,nextRoadInRouteIndex) = 1;
-           cars(:,nextRoadIndex) = routes(i,1);
+           cars(i,nextRoadInRouteIndex) = cars(i,nextRoadInRouteIndex) -1;
         end
     end
     
