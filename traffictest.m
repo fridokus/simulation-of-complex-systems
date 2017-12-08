@@ -9,8 +9,8 @@ xmax = max(nodes(:,1));
 ymax = max(nodes(:,2));
 roads = initializeRoads();
 
-numberOfRandomCars = 150;
-numberOfCars = 300;
+numberOfRandomCars = 100;
+numberOfCars = 200;
 
 cars = initializeCars(nodes, roads, numberOfCars, numberOfRandomCars);
 
@@ -35,7 +35,7 @@ nextRoadInRouteIndex = 9;
 global timeStep;
 timeStep = 0.1;
 global maxVelocityInIntersection;
-maxVelocityInIntersection = 15;
+maxVelocityInIntersection = 5;
 
 nIteration = 0;
 nbrOfCars = size(cars, 1);

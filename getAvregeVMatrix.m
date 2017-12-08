@@ -6,13 +6,13 @@ function averageV = getAvregeVMatrix(carsV,carsR,nodes,roads)
     s = 1;
     vAtRoad = zeros(1,nbrRoads);
     
-    for i = 1:nbrRoads
+    for i = nbrRoads:-1:1
         carsAtRoad = find(carsR == i);
         nbrCars = length(carsAtRoad);
         if nbrCars > 0
             vAtRoad(i) = sum(carsV(s:nbrCars))/nbrCars;
         else 
-            vAtRoad(i) = maxVAtRoad(i);
+            vAtRoad(i) = maxVAtRoad(nbrRoads-i+1);
         end
             s = s + nbrCars;
     end
@@ -20,11 +20,11 @@ function averageV = getAvregeVMatrix(carsV,carsR,nodes,roads)
    for i = 1:length(roads)
         from = roads(i,1);
         to = roads(i,2);
-        if (1/vAtRoad(i) > 1000000)
+        if vAtRoad(length(roads)-i+1) == 0
             averageV(from,to) = 1000000; 
         else
-            averageV(from,to) = 1/vAtRoad(i);
+            averageV(from,to) = 1/vAtRoad(length(roads)-i+1);
         end
-    end
-    
+   end
+
 end
