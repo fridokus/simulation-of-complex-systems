@@ -10,23 +10,15 @@ function colorGrid =  plotTrace(roads, nodes, positions, roadIndices)
     roadLengths = calculateRoadLength(nodes, roads);
     
     
-    for i=1:10%nbrIterations
+    for i=1:500%nbrIterations
         existingCars = find(roadIndices(:,i));
         coordinates = startingPoints(roadIndices(existingCars,i),:) + positions(existingCars,i)./roadLengths(roadIndices(existingCars,i)).* directionVectors(roadIndices(existingCars,i),:);
         coordinates = uint32(coordinates);
-        %coordinates(:,1)
         colorGrid(coordinates(:,1), coordinates(:,2)) = colorGrid(coordinates(:,1), coordinates(:,2)) + 1;
     end
-    maximum = 0;
-    for i=1:1500
-        if max(colorGrid(i,:)) > maximum
-            maximum = max(colorGrid(i,:));
-        end
-    end
-    
-    heatmap(colorGrid)
-    
-%     fig = figure(1);
-%     truesize(fig, [1500, 1500])
-%     imshow(colorGrid, 'InitialMagnification','fit')
+
+    colorGrid = rot90(colorGrid);
+    fig = figure(1);
+    imshow(colorGrid)
+    colormap jet
 end

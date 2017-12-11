@@ -1,4 +1,5 @@
 clc
+clf
 colorGrid = plotTrace(roads, nodes, savePosition, saveRoad);
 
 %%
@@ -19,8 +20,8 @@ roads(144,3) = 10;
 roads(133,3) = 15;
 roads(134,3) = 15;
 
-numberOfRandomCars = 0;
-numberOfCars = 2;
+numberOfRandomCars = 10;
+numberOfCars = 20;
 
 cars = initializeCars(nodes, roads, numberOfCars, numberOfRandomCars);
 
@@ -62,7 +63,7 @@ saveCurrentVelocity = zeros(nbrOfCars,numberOfIterations);
 
 
 cars(:,positionIndex) = 0;
-routes = InizilizeRoutes(cars(initializedCarIndices,:),nodes,roads, 56, 55, length(unInitializedCarIndices));
+routes = InizilizeRoutes(cars(initializedCarIndices,:),nodes,roads, 1, 55, length(unInitializedCarIndices));
 cars(initializedCarIndices,roadIndex) = routes(initializedCarIndices,1);
 cars(initializedCarIndices,nextRoadIndex) = routes(initializedCarIndices,2);
 cars(initializedCarIndices,nextRoadInRouteIndex) = 2;
