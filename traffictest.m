@@ -7,16 +7,10 @@ numberOfIterations = 7000;
 nodes = initializeNodes();
 xmax = max(nodes(:,1));
 ymax = max(nodes(:,2));
-roads = initializeRoads();
-roads(125,3) = 42;
-roads(126,3) = 42;
-roads(149,3) = 10;
-roads(144,3) = 10;
-roads(133,3) = 15;
-roads(134,3) = 15;
+roads = initializeRoads(nodes);
 
-numberOfRandomCars =10;
-numberOfCars = 20;
+numberOfRandomCars =400;
+numberOfCars = 2000;
 
 cars = initializeCars(nodes, roads, numberOfCars, numberOfRandomCars);
 
@@ -60,7 +54,7 @@ unInitializedCarIndices = find(sum(cars')==0);
 
 
 cars(:,positionIndex) = 0;
-routes = InizilizeRoutes(cars(initializedCarIndices,:),nodes,roads, 56, 55, length(unInitializedCarIndices));
+routes = InizilizeRoutes(cars(initializedCarIndices,:),nodes,roads, 1, 4, length(unInitializedCarIndices));
 cars(initializedCarIndices,roadIndex) = routes(initializedCarIndices,1);
 cars(initializedCarIndices,nextRoadIndex) = routes(initializedCarIndices,2);
 cars(initializedCarIndices,nextRoadInRouteIndex) = 2;
@@ -74,14 +68,13 @@ for i = 1:numberOfIterations
   [cars(initializedCarIndices,:) routes(initializedCarIndices,:)] = updateCars(cars(initializedCarIndices,:), nodes, roads,routes(initializedCarIndices,:));
   initializedCarIndices = find(sum(cars'));
 
-  if ~isempty(unInitializedCarIndices)
-    size(cars(unInitializedCarIndices(1),:));
-    size(routes(unInitializedCarIndices(1),:));
-    [routes(unInitializedCarIndices(1),:) cars(unInitializedCarIndices(1),:)] = generateNewCars(48, 56, nodes, roads, length(unInitializedCarIndices));
-    cars(unInitializedCarIndices(1), roadIndex) = routes(unInitializedCarIndices(1),1);
-    cars(unInitializedCarIndices(1), nextRoadIndex) = routes(unInitializedCarIndices(1),2);
-    cars(unInitializedCarIndices(1), nextRoadInRouteIndex) = 1;
-    [cars routes] = sortwrapper(cars, routes);
+  if ~isempty(unInitializedCarIndices) & mod(i, 10) == 0
+    [cars routes] =generateCarWrapper(cars, routes, nodes, roads, 1, 1000, unInitializedCarIndices);
+  end
+
+  if ~isempty(unInitializedCarIndices) & mod(i, 10) == 0
+    unInitializedCarIndices = find(sum(cars')==0);
+    [cars routes] =generateCarWrapper(cars, routes, nodes, roads, 901, 100, unInitializedCarIndices);
   end
 
   initializedCarIndices = find(cars(:,roadIndex)>0);
