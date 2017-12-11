@@ -1,13 +1,13 @@
 clc
 clf
-plotTrace(saveRoad, nodes, roads);
+plotDensities(saveRoad, saveCurrentVelocity, nodes, roads);
 
 %%
 clear all
 clf
 clc
 
-numberOfIterations = 7000;
+numberOfIterations = 1000;
 
 nodes = initializeNodes();
 nbrOfNodes = size(nodes, 1);
@@ -77,6 +77,10 @@ for i = 1:numberOfIterations
   [~, saveCurrentVelocity(initializedCarIndices,:)] = sortwrapper(cars(initializedCarIndices,:), saveCurrentVelocity(initializedCarIndices,:));
   [cars(initializedCarIndices,:) routes(initializedCarIndices,:)] = updateCars(cars(initializedCarIndices,:), nodes, roads,routes(initializedCarIndices,:));
   initializedCarIndices = find(sum(cars'));
+  %[~, saveRoad(initializedCarIndices,:)] = sortwrapper(cars(initializedCarIndices,:), saveRoad(initializedCarIndices,:)); 
+  %[~, savePosition(initializedCarIndices,:)] = sortwrapper(cars(initializedCarIndices,:), savePosition(initializedCarIndices,:)); 
+  %[~, saveCurrentVelocity(initializedCarIndices,:)] = sortwrapper(cars(initializedCarIndices,:), saveCurrentVelocity(initializedCarIndices,:));
+  
   
   if ~isempty(unInitializedCarIndices)
     size(cars(unInitializedCarIndices(1),:));
@@ -85,10 +89,10 @@ for i = 1:numberOfIterations
     cars(unInitializedCarIndices(1), roadIndex) = routes(unInitializedCarIndices(1),1);
     cars(unInitializedCarIndices(1), nextRoadIndex) = routes(unInitializedCarIndices(1),2);
     cars(unInitializedCarIndices(1), nextRoadInRouteIndex) = 1;
-    [cars routes] = sortwrapper(cars, routes);
     [~, saveRoad] = sortwrapper(cars, saveRoad); 
     [~, savePosition] = sortwrapper(cars, savePosition); 
     [~, saveCurrentVelocity] = sortwrapper(cars, saveCurrentVelocity);
+    [cars routes] = sortwrapper(cars, routes);
   end
 
   initializedCarIndices = find(cars(:,roadIndex)>0);
@@ -111,9 +115,9 @@ for i = 1:numberOfIterations
         drawnow
     end
     
-    [~, saveRoad] = sortwrapper(cars, saveRoad);
-    [~, savePosition] = sortwrapper(cars, savePosition);
-    [~, saveCurrentVelocity] = sortwrapper(cars, saveCurrentVelocity);
+    %[~, saveRoad] = sortwrapper(cars, saveRoad);
+    %[~, savePosition] = sortwrapper(cars, savePosition);
+    %[~, saveCurrentVelocity] = sortwrapper(cars, saveCurrentVelocity);
     saveRoad = saveRoads(cars, i, saveRoad);
     savePosition = savePositions(cars, i, savePosition);
     saveCurrentVelocity = saveCurrentVelocities(cars, i, saveCurrentVelocity);
