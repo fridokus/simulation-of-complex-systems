@@ -8,32 +8,32 @@ function plotDensities(roadIndices, velocities, nodes, roads)
     usedRoads = zeros(1, nbrOfRoads + 1);
     totalTime = nbrOfIterations;
     
-    for i=1:nbrOfIterations
-        existingCars = find(roadIndices(:,i));
-        usedRoads(roadIndices(existingCars, i)) = usedRoads(roadIndices(existingCars, i)) + 1;
-    end
-    
-       
-    c = jet(100);
-    figure(1)
-    plotRoads(roads, nodes)
-    for i=1:nbrOfRoads
-        road = roads(i,:);
-        startNode = nodes(road(1),:);
-        endNode = nodes(road(2),:);
-        if usedRoads(i) ~= 0
-            colorIndex = floor(usedRoads(i)/max(usedRoads)*100);
-            plot([startNode(1), endNode(1)], [startNode(2), endNode(2)], 'Color', c(colorIndex,:), 'Linewidth', 3);
-            hold on
-        end
-    end
-    title("Road Density in City")
-    xlabel("Distance [m]")
-    ylabel("Distance [m]")
-    caxis([0, max(usedRoads)*0.1])
-    colormap(c);
-    c = colorbar();
-    c.Label.String = "Density (cars/m)";
+%     for i=1:nbrOfIterations
+%         existingCars = find(roadIndices(:,i));
+%         usedRoads(roadIndices(existingCars, i)) = usedRoads(roadIndices(existingCars, i)) + 1;
+%     end
+%     
+%        
+%     c = jet(100);
+%     figure(1)
+%     plotRoads(roads, nodes)
+%     for i=1:nbrOfRoads
+%         road = roads(i,:);
+%         startNode = nodes(road(1),:);
+%         endNode = nodes(road(2),:);
+%         if usedRoads(i) ~= 0
+%             colorIndex = floor(usedRoads(i)/max(usedRoads)*100);
+%             plot([startNode(1), endNode(1)], [startNode(2), endNode(2)], 'Color', c(colorIndex,:), 'Linewidth', 3);
+%             hold on
+%         end
+%     end
+%     title("Road Density in City")
+%     xlabel("Distance [m]")
+%     ylabel("Distance [m]")
+%     caxis([0, max(usedRoads)*0.1])
+%     colormap(c);
+%     c = colorbar();
+%     c.Label.String = "Density (cars/m)";
     
     % Densities
     avgTimes = zeros(1, nbrOfRoads);
@@ -81,9 +81,11 @@ function plotDensities(roadIndices, velocities, nodes, roads)
     c = colorbar();
     c.Label.String = "Density (time/car)";
     
+    
+    
     figure(3)
     plotRoads(roads, nodes)
-    density = nbrOfCarsPerRoad/(totalTime*0.1) %cars per second
+    density = nbrOfCarsPerRoad /(totalTime*0.1); %cars per second
     maxDensity = fix(max(density) * 1000);
     c = jet(fix(maxDensity));
     for i=1:nbrOfRoads
@@ -107,7 +109,7 @@ function plotDensities(roadIndices, velocities, nodes, roads)
     %Velocities
     figure(4)
     plotRoads(roads, nodes)
-    density = avgVelocities./nbrOfCarsPerRoad;
+    density = avgVelocities./nbrOfCarsPerRoad
     maxVelocity = max(density);
     c = jet(fix(maxVelocity * 100));
     for i=1:nbrOfRoads

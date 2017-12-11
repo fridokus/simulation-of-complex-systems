@@ -77,10 +77,6 @@ for i = 1:numberOfIterations
   [~, saveCurrentVelocity(initializedCarIndices,:)] = sortwrapper(cars(initializedCarIndices,:), saveCurrentVelocity(initializedCarIndices,:));
   [cars(initializedCarIndices,:) routes(initializedCarIndices,:)] = updateCars(cars(initializedCarIndices,:), nodes, roads,routes(initializedCarIndices,:));
   initializedCarIndices = find(sum(cars'));
-  %[~, saveRoad(initializedCarIndices,:)] = sortwrapper(cars(initializedCarIndices,:), saveRoad(initializedCarIndices,:)); 
-  %[~, savePosition(initializedCarIndices,:)] = sortwrapper(cars(initializedCarIndices,:), savePosition(initializedCarIndices,:)); 
-  %[~, saveCurrentVelocity(initializedCarIndices,:)] = sortwrapper(cars(initializedCarIndices,:), saveCurrentVelocity(initializedCarIndices,:));
-  
   
   if ~isempty(unInitializedCarIndices)
     size(cars(unInitializedCarIndices(1),:));
@@ -99,7 +95,6 @@ for i = 1:numberOfIterations
   randomCarIndices = find(routes(:,end) == -1);
   parkedCarIndices = find(cars(:,roadIndex) == 0);
   targetCarIndies = find(routes(:,end) ~= -1);
-  %plotRoute = routes(target) 
     
     if mod(i, 5) == 0
         plotCoordinates = parameterCoordinates(cars(initializedCarIndices,:), nodes, roads);
@@ -115,9 +110,6 @@ for i = 1:numberOfIterations
         drawnow
     end
     
-    %[~, saveRoad] = sortwrapper(cars, saveRoad);
-    %[~, savePosition] = sortwrapper(cars, savePosition);
-    %[~, saveCurrentVelocity] = sortwrapper(cars, saveCurrentVelocity);
     saveRoad = saveRoads(cars, i, saveRoad);
     savePosition = savePositions(cars, i, savePosition);
     saveCurrentVelocity = saveCurrentVelocities(cars, i, saveCurrentVelocity);
