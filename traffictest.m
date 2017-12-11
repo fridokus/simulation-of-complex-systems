@@ -1,3 +1,7 @@
+clc
+colorGrid = plotTrace(roads, nodes, savePosition, saveRoad);
+
+%%
 clear all
 clf
 clc
@@ -15,7 +19,7 @@ roads(144,3) = 10;
 roads(133,3) = 15;
 roads(134,3) = 15;
 
-numberOfRandomCars =0;
+numberOfRandomCars = 0;
 numberOfCars = 2;
 
 cars = initializeCars(nodes, roads, numberOfCars, numberOfRandomCars);
@@ -43,20 +47,18 @@ timeStep = 0.1;
 global maxVelocityInIntersection;
 maxVelocityInIntersection = 2;
 
-nIteration = 0;
 nbrOfCars = size(cars, 1);
-
 initializedCarIndices = find(sum(cars'));
 unInitializedCarIndices = find(sum(cars')==0);
 
-% savePosition = zeros(nbrOfCars,numberOfIterations);
-% saveRoad = zeros(nbrOfCars,numberOfIterations);
-% saveMaxVelocity = zeros(nbrOfCars,numberOfIterations);
-% saveCurrentVelocity = zeros(nbrOfCars,numberOfIterations);
-% saveMaxAcceleration = zeros(nbrOfCars,numberOfIterations);
-% saveMaxDeacceleration = zeros(nbrOfCars,numberOfIterations);
-% saveVision = zeros(nbrOfCars,numberOfIterations);
-% saveNextRoad = zeros(nbrOfCars,numberOfIterations);
+savePosition = zeros(nbrOfCars,numberOfIterations);
+saveRoad = zeros(nbrOfCars,numberOfIterations);
+%saveMaxVelocity = zeros(nbrOfCars,numberOfIterations);
+saveCurrentVelocity = zeros(nbrOfCars,numberOfIterations);
+%saveMaxAcceleration = zeros(nbrOfCars,numberOfIterations);
+%saveMaxDeacceleration = zeros(nbrOfCars,numberOfIterations);
+%saveVision = zeros(nbrOfCars,numberOfIterations);
+%saveNextRoad = zeros(nbrOfCars,numberOfIterations);
 
 
 cars(:,positionIndex) = 0;
@@ -68,7 +70,6 @@ cars(initializedCarIndices,nextRoadInRouteIndex) = 2;
 
 
 for i = 1:numberOfIterations
-  nIteration = nIteration + 1;
   initializedCarIndices = find(0<sum(cars') & sum(cars')<1e7);
   unInitializedCarIndices = find(sum(cars')==0);
   [cars(initializedCarIndices,:) routes(initializedCarIndices,:)] = updateCars(cars(initializedCarIndices,:), nodes, roads,routes(initializedCarIndices,:));
@@ -103,5 +104,9 @@ for i = 1:numberOfIterations
         plotRoads(roads, nodes);
         drawnow
     end
+    
+    saveRoad = saveRoads(cars, i, saveRoad);
+    savePosition = savePositions(cars, i, savePosition);
+    saveCurrentVelocity = saveCurrentVelocities(cars, i, saveCurrentVelocity);
 end
 

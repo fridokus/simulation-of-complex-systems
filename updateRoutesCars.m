@@ -20,7 +20,6 @@ function [routes, cars] = updateRoutesCars(cars,routes,roadDecision,nodes,roads)
            routes(i,:) = route;
            
            cars(i,nextRoadInRouteIndex) = 1;
-           %cars(i,nextRoadIndex) = routes(i,1);
            cars(i, roadIndex) = route(1);
            cars(i, nextRoadIndex) = route(2);
         end
