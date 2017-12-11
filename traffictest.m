@@ -21,10 +21,8 @@ roads(144,3) = 10;
 roads(133,3) = 15;
 roads(134,3) = 15;
 
-numberOfRandomCars = 0;
-numberOfCars = 5;
-
-
+numberOfRandomCars = 10;
+numberOfCars = 50;
 cars = initializeCars(nodes, roads, numberOfCars, numberOfRandomCars);
 
 global positionIndex;
