@@ -72,16 +72,12 @@ cars(initializedCarIndices,nextRoadInRouteIndex) = 2;
 for i = 1:numberOfIterations
   initializedCarIndices = find(cars(:,roadIndex)>0);
   unInitializedCarIndices = find(sum(cars')==0);
+  [~, saveRoad(initializedCarIndices,:)] = sortwrapper(cars(initializedCarIndices,:), saveRoad(initializedCarIndices,:)); 
+  [~, savePosition(initializedCarIndices,:)] = sortwrapper(cars(initializedCarIndices,:), savePosition(initializedCarIndices,:)); 
+  [~, saveCurrentVelocity(initializedCarIndices,:)] = sortwrapper(cars(initializedCarIndices,:), saveCurrentVelocity(initializedCarIndices,:));
   [cars(initializedCarIndices,:) routes(initializedCarIndices,:)] = updateCars(cars(initializedCarIndices,:), nodes, roads,routes(initializedCarIndices,:));
   initializedCarIndices = find(sum(cars'));
-  size(cars(initializedCarIndices,:))
-  size(saveRoad(initializedCarIndices,:))
-  if length(initializedCarIndices) > 1
-     initializedCarIndices
-     [~, saveRoad(initializedCarIndices,:)] = sortwrapper(cars(initializedCarIndices,:), saveRoad(initializedCarIndices,:));
-     [~, savePosition(initializedCarIndices,:)] = sortwrapper(cars(initializedCarIndices,:), savePosition(initializedCarIndices,:));
-     [~, saveCurrentVelocity(initializedCarIndices,:)] = sortwrapper(cars(initializedCarIndices,:), saveCurrentVelocity(initializedCarIndices,:));
-  end
+  
   if ~isempty(unInitializedCarIndices)
     size(cars(unInitializedCarIndices(1),:));
     size(routes(unInitializedCarIndices(1),:));
