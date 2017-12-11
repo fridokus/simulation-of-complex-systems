@@ -15,7 +15,6 @@ function [cars, routes] = updatNextRoadInRouteIndex(cars,routes,roadDecision, ro
                 currentRoad = cars(i,roadIndex);
                 cars(i,nextRoadIndex) = getNextRoadIndex(currentRoad, roads);
                 routes(i,3) = cars(i,nextRoadIndex);
-                %routes(i,1) = cars(i,nextRoadIndex);
         else
             cars(i,nextRoadIndex) = routes(i,cars(i,nextRoadInRouteIndex));
         end

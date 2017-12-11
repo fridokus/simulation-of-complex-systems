@@ -45,17 +45,18 @@ function plotTrace(roadIndices, nodes, roads)
     for iCar=1:nbrOfCars
         previousRoad = roadIndices(iCar, 1);
         travelTime = 0;
-        for time=2:497%nbrOfIterations
+        for time=2:%nbrOfIterations
             currentRoad = roadIndices(iCar, time);
-            if currentRoad ~= previousRoad && previousRoad ~= 0
+            if (currentRoad ~= previousRoad && previousRoad ~= 0)
                 avgTimes(previousRoad) = avgTimes(previousRoad) + travelTime;
                 nbrOfCarsPerRoad(previousRoad) = nbrOfCarsPerRoad(previousRoad) + 1;
                 travelTime = 0;
+                previousRoad = currentRoad;
             end
-            previousRoad = currentRoad;
             travelTime = travelTime + 0.1;
         end
     end
+    
     
     figure(2)
     plotRoads(roads, nodes)
@@ -67,7 +68,7 @@ function plotTrace(roadIndices, nodes, roads)
         startNode = nodes(road(1),:);
         endNode = nodes(road(2),:);
         if density(i) > 0
-            colorIndex = fix(density(i) * 100);
+            colorIndex = fix(round(density(i), 2) * 100);
             plot([startNode(1), endNode(1)], [startNode(2), endNode(2)], 'Color', c(colorIndex,:), 'Linewidth', 3);
             hold on
         end
