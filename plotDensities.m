@@ -5,7 +5,6 @@ function plotDensities(roadIndices, velocities, nodes, roads)
     nbrOfIterations = size(roadIndices, 2);
     nbrOfCars = size(roadIndices, 1);
     nbrOfRoads = size(roads, 1);
-    usedRoads = zeros(1, nbrOfRoads + 1);
     totalTime = nbrOfIterations;
     
        
@@ -39,8 +38,8 @@ function plotDensities(roadIndices, velocities, nodes, roads)
         road = roads(i,:);
         startNode = nodes(road(1),:);
         endNode = nodes(road(2),:);
-        if density(i) ~= 0
-            colorIndex = floor(density(i)*100);
+        colorIndex = floor(density(i)*100);
+        if colorIndex ~= 0.0
             plot([startNode(1), endNode(1)], [startNode(2), endNode(2)], 'Color', c(colorIndex,:), 'Linewidth', 3);
             hold on
         end
