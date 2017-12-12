@@ -33,36 +33,49 @@ global maxVelocityInIntersection;
 maxVelocityInIntersection = 10;
 
 
-%nodes = initializeNodesSquare();
-%roads = initializeRoadsSquare(nodes);
+nodes = initializeNodesSquare();
+roads = initializeRoadsSquare(nodes);
 
-nodes = initializeNodes();
+%nodes = initializeNodes();
 numberOfNodes = size(nodes, 1);
 xmax = max(nodes(:,1)) + 10;
 ymax = max(nodes(:,2)) + 10;
-roads = initializeRoads();
-roads(125,3) = 42;
-roads(126,3) = 42;
-roads(149,3) = 10;
-roads(144,3) = 10;
-roads(133,3) = 15;
-roads(134,3) = 15;
+%roads = initializeRoads();
+% roads(125,3) = 42;
+% roads(126,3) = 42;
+% roads(149,3) = 10;
+% roads(144,3) = 10;
+% roads(133,3) = 15;
+% roads(134,3) = 15;
+numberOfRoads = size(roads, 1);
 
-
-numberOfRandomCars = 10;
+numberOfRandomCars = 100;
 numberOfTargetCars = [0, 1, 2];
 numberOfStandardCars = [0, 0, 2];
 %numberOfTargetCars = 1*[0 1 2 3 4 5 6 7 8 9 10];
 %numberOfStandardCars =1*[10 9 8 7 6 5 4 3 2 1 0];
 
+%%% CREATE VIDEO
+v = VideoWriter('DecisionTraffic.mp4'); %'MPEG-4'
+v.FrameRate = 10;
+v.Quality = 100;
+open(v);
+
 for rateTargetCars = 2:2%length(numberOfTargetCars)
+    %%%% CREATE FIGURE
+    h=figure; 
+    set(h,'Color','w','Units','Pixels','Position',[0 0 xmax ymax]);
+    a1=axes('Units','Pixels','Position',[400 75 500 500]);   
+    hold on;
+    %%%
+    
     numberOfCars = numberOfRandomCars + numberOfTargetCars(rateTargetCars) + numberOfStandardCars(rateTargetCars);
     targetVector = getTargetVector(numberOfTargetCars(rateTargetCars), numberOfStandardCars(rateTargetCars));
     targetI = 1;
 
     cars = initializeCars(nodes, roads, numberOfCars, numberOfRandomCars);
 
-    numberOfIterations = 1000;
+    numberOfIterations = 2000;
 
     initializedCarIndices = find(sum(cars'));
     unInitializedCarIndices = find(sum(cars')==0);
@@ -95,7 +108,7 @@ for rateTargetCars = 2:2%length(numberOfTargetCars)
       if ~isempty(unInitializedCarIndices)
         target = targetVector(targetI);
         targetI = targetI + 1;
-        [routes(unInitializedCarIndices(1),:) cars(unInitializedCarIndices(1),:)] = generateNewCars(randi(numberOfNodes - 1), randi(numberOfNodes - 1), nodes, roads, length(unInitializedCarIndices),target);
+        [routes(unInitializedCarIndices(1),:) cars(unInitializedCarIndices(1),:)] = generateNewCars(1, 100, nodes, roads, length(unInitializedCarIndices),target);
         cars(unInitializedCarIndices(1), roadIndex) = routes(unInitializedCarIndices(1),1);
         cars(unInitializedCarIndices(1), nextRoadIndex) = routes(unInitializedCarIndices(1),2);
         cars(unInitializedCarIndices(1), nextRoadInRouteIndex) = 1;
@@ -109,30 +122,20 @@ for rateTargetCars = 2:2%length(numberOfTargetCars)
       initializedCarIndices = find(cars(:,roadIndex)>0);
       randomCarIndices = find(routes(:,end) == -1);
       parkedCarIndices = find(cars(:,roadIndex) == 0);
-      targetCarIndies = find(cars(:,targetCar) == 1);
-      standardCarIndies = find(cars(:,targetCar) == -1);
+      targetCarIndices = find(cars(:,targetCar) == 1);
+      standardCarIndices = find(cars(:,targetCar) == -1);
       %plotRoute = routes(target) 
 
-      if mod(i, 5) == 0
+      if mod(i, 10) == 0
+        route = routes(targetCarIndices,:);
         plotCoordinates = parameterCoordinates(cars(initializedCarIndices,:), nodes, roads);
         plotCoordinatesRandom = parameterCoordinates(cars(randomCarIndices,:), nodes, roads);
-        plotCoordinatesTarget = parameterCoordinates(cars(targetCarIndies,:), nodes, roads);
-        plotCoordinatesStandard = parameterCoordinates(cars(standardCarIndies,:), nodes, roads);
-        clf;
-        scatter(plotCoordinates(:,1), plotCoordinates(:,2), 'filled')
-        hold on
-        scatter(plotCoordinatesRandom(:,1), plotCoordinatesRandom(:,2), 'filled','red')
-        hold on 
-        scatter(plotCoordinatesTarget(:,1), plotCoordinatesTarget(:,2), 'filled','blue')
-        hold on
-        %scatter(plotCoordinatesStandard(:,1), plotCoordinatesStandard(:,2), 'filled','green')
-        %hold on
-        text(0, 190, strcat('Time: ',num2str(i*timeStep)), 'fontsize', 18);
-        axis([-10, xmax+50, -10, ymax + 50])
-        plotRoads(roads, nodes);
-        drawnow
+        plotCoordinatesTarget = parameterCoordinates(cars(targetCarIndices,:), nodes, roads);
+        plotCoordinatesStandard = parameterCoordinates(cars(standardCarIndices,:), nodes, roads);
+        plotRoadsAndUpdateRoute(h, a1, roads, nodes, route, i * timeStep, v, xmax, ymax, plotCoordinatesRandom, ...
+                                plotCoordinatesTarget, plotCoordinatesStandard)
       end
-
+      
       saveRoad = saveRoads(cars, i, saveRoad);
       savePosition = savePositions(cars, i, savePosition);
       saveCurrentVelocity = saveCurrentVelocities(cars, i, saveCurrentVelocity);

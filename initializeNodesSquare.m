@@ -1,6 +1,6 @@
 function nodes = initializeNodesSquare()
   squarelength = 300;
-  sideLength = 4;
+  sideLength = 10;
   numberOfNodes = sideLength^2;
   nodes = zeros(numberOfNodes, 2);
   k = 1;
