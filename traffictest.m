@@ -4,13 +4,13 @@ clc
 
 numberOfIterations = 7000;
 
-nodes = initializeNodes();
+nodes = initializeNodesSquare();
 xmax = max(nodes(:,1));
 ymax = max(nodes(:,2));
-roads = initializeRoads(nodes);
+roads = initializeRoadsSquare(nodes);
 
-numberOfRandomCars =400;
-numberOfCars = 2000;
+numberOfRandomCars = 90;
+numberOfCars = 400;
 
 cars = initializeCars(nodes, roads, numberOfCars, numberOfRandomCars);
 
@@ -68,13 +68,14 @@ for i = 1:numberOfIterations
   [cars(initializedCarIndices,:) routes(initializedCarIndices,:)] = updateCars(cars(initializedCarIndices,:), nodes, roads,routes(initializedCarIndices,:));
   initializedCarIndices = find(sum(cars'));
 
-  if ~isempty(unInitializedCarIndices) & mod(i, 10) == 0
-    [cars routes] =generateCarWrapper(cars, routes, nodes, roads, 1, 1000, unInitializedCarIndices);
+  if ~isempty(unInitializedCarIndices) & mod(i, 5) == 0
+    [cars routes] = generateCarWrapper(cars, routes, nodes, roads, 1, 81, unInitializedCarIndices);
   end
 
-  if ~isempty(unInitializedCarIndices) & mod(i, 10) == 0
+
+  if ~isempty(unInitializedCarIndices) & mod(i, 5) == 0
     unInitializedCarIndices = find(sum(cars')==0);
-    [cars routes] =generateCarWrapper(cars, routes, nodes, roads, 901, 100, unInitializedCarIndices);
+    [cars routes] =generateCarWrapper(cars, routes, nodes, roads, 9, 72, unInitializedCarIndices);
   end
 
   initializedCarIndices = find(cars(:,roadIndex)>0);
@@ -82,14 +83,21 @@ for i = 1:numberOfIterations
   parkedCarIndices = find(cars(:,roadIndex) == 0);
   targetCarIndies = find(routes(:,end) ~= -1);
   %plotRoute = routes(target) 
+
     
     if mod(i, 5) == 0
         plotCoordinates = parameterCoordinates(cars(initializedCarIndices,:), nodes, roads);
-        plotCoordinatesRandom = parameterCoordinates(cars(randomCarIndices,:), nodes, roads);
+        translatedPlotCoordinates = orthogonalTranslation(plotCoordinates, nodes, roads, cars(initializedCarIndices, :));
+        if randomCarIndices > 0
+          plotCoordinatesRandom = parameterCoordinates(cars(randomCarIndices,:), nodes, roads);
+          translatedPlotCoordinatesRandom = orthogonalTranslation(plotCoordinatesRandom, nodes, roads, cars(randomCarIndices, :));
+        end
         clf;
-        scatter(plotCoordinates(:,1), plotCoordinates(:,2), 'filled')
+        scatter(translatedPlotCoordinates(:,1), translatedPlotCoordinates(:,2), 'filled')
         hold on
-        scatter(plotCoordinatesRandom(:,1), plotCoordinatesRandom(:,2), 'filled','red')
+        if randomCarIndices > 0
+          scatter(translatedPlotCoordinatesRandom(:,1), translatedPlotCoordinatesRandom(:,2), 'filled','red')
+        end
         hold on 
         text(0, 190, strcat('Time: ',num2str(i*timeStep)), 'fontsize', 18);
         axis([-10, xmax+50, -10, ymax + 50])

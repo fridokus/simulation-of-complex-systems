@@ -1,6 +1,6 @@
 function nodes = initializeNodes()
   squarelength = 300;
-  sideLength = 30;
+  sideLength = 9;
   numberOfNodes = sideLength^2;
   nodes = zeros(numberOfNodes, 2);
   k = 1;
