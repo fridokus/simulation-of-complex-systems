@@ -12,9 +12,10 @@ function [path,costMatrix] = dijkstrasGetPath(startNode,stopNode,networkMatrix,a
     
     while ~isempty(queue)
        [~, iNextNode] =  min(tmp_distance(queue));
-       shortestDistanceNode = queue(iNextNode(1));
+       r = randi([1 length(iNextNode)],1);
+       shortestDistanceNode = queue(iNextNode(r));
        visited(length(visited) + 1) = shortestDistanceNode;
-       queue(iNextNode(1)) = [];
+       queue(iNextNode(r)) = [];
        neighbouringNodes = find(costMatrix(shortestDistanceNode,:) ~= 0);
        for j=1:length(neighbouringNodes)
            neighbourNode = neighbouringNodes(j);

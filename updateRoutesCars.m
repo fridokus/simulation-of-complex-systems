@@ -3,12 +3,13 @@ function [routes, cars] = updateRoutesCars(cars,routes,roadDecision,nodes,roads)
     global roadIndex;
     global nextRoadInRouteIndex; 
     global nextRoadIndex;
+    global targetCar;
     
     networkMatrix = loadNetworkMatrix(roads,nodes);
     nbrCars = size(cars,1);
     
     for i = 1:nbrCars
-        if roadDecision(i) == 1 && routes(i,end) ~= -1
+        if roadDecision(i) == 1 && routes(i,end) ~= -1 && cars(i,targetCar) == 1
            route = routes(i,:);
            start = cars(i,roadIndex);
            startNode = roads(cars(i,roadIndex),2);

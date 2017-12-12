@@ -9,7 +9,7 @@ function [cars, routes] = updatNextRoadInRouteIndex(cars,routes,roadDecision, ro
     
     for i = 1:nbrOfCars
         if (routes(i,cars(i,nextRoadInRouteIndex)) == 0)
-            cars(i,:) = [1e8 0 0 0 0 0 0 0 0];
+            cars(i,:) = [1e8 0 0 0 0 0 0 0 0 0];
         elseif (routes(i,cars(i,nextRoadInRouteIndex)) == -1)
                 cars(i,nextRoadInRouteIndex) = 3;
                 currentRoad = cars(i,roadIndex);
