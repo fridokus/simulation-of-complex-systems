@@ -1,3 +1,4 @@
+
 function nodes = initializeNodesSquare()
   squarelength = 300;
   sideLength = 10;

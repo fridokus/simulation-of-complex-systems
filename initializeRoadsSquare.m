@@ -1,3 +1,4 @@
+
 function roads = initializeRoadsSquare(nodes)
   numberOfNodes = length(nodes);
   sideLength = sqrt(numberOfNodes);
@@ -61,4 +62,5 @@ function roads = initializeRoadsSquare(nodes)
   roads(k,:) = [numberOfNodes numberOfNodes-1 30];
   k = k + 1;
   roads(k,:) = [numberOfNodes numberOfNodes-sideLength 30];
+
 end

@@ -129,6 +129,11 @@ for rateTargetCars = 2:2%length(numberOfTargetCars)
       if mod(i, 10) == 0
         route = routes(targetCarIndices,:);
         plotCoordinates = parameterCoordinates(cars(initializedCarIndices,:), nodes, roads);
+%         translatedPlotCoordinates = orthogonalTranslation(plotCoordinates, nodes, roads, cars(initializedCarIndices, :));
+%         if randomCarIndices > 0
+%           plotCoordinatesRandom = parameterCoordinates(cars(randomCarIndices,:), nodes, roads);
+%           translatedPlotCoordinatesRandom = orthogonalTranslation(plotCoordinatesRandom, nodes, roads, cars(randomCarIndices, :));
+%         end
         plotCoordinatesRandom = parameterCoordinates(cars(randomCarIndices,:), nodes, roads);
         plotCoordinatesTarget = parameterCoordinates(cars(targetCarIndices,:), nodes, roads);
         plotCoordinatesStandard = parameterCoordinates(cars(standardCarIndices,:), nodes, roads);

@@ -8,7 +8,7 @@ function routes = InizilizeRoutes(cars,nodes,roads,startNode, stopNode, numberOf
         routes(i,:) = uppdateRoutes(cars,i,routes(i,:),startNode,stopNode,nodes,roads,networkMatrix);
    end
    if nbrOfCars > 1
-       for j = 1:length(cars)
+       for j = 1:size(cars, 1)
            route = zeros(1, size(roads,1)) - 1;
            startRoad = randi(size(roads,1));
            nextRoad = getNextRoadIndex(startRoad, roads);
@@ -17,8 +17,4 @@ function routes = InizilizeRoutes(cars,nodes,roads,startNode, stopNode, numberOf
            routes(j,:) = route;
        end
    end
-    
 end
-
-    
-    
