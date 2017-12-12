@@ -1,5 +1,4 @@
 function routes = InizilizeRoutes(cars,nodes,roads,startNode, stopNode, numberOfUninitializedCars)
-    
 
     nbrOfCars = size(cars,1);
     networkMatrix = loadNetworkMatrix(roads,nodes);

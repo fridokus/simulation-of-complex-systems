@@ -7,24 +7,6 @@ clear all
 clf
 clc
 
-numberOfIterations = 1000;
-
-nodes = initializeNodes();
-nbrOfNodes = size(nodes, 1);
-xmax = max(nodes(:,1));
-ymax = max(nodes(:,2));
-roads = initializeRoads();
-roads(125,3) = 42;
-roads(126,3) = 42;
-roads(149,3) = 10;
-roads(144,3) = 10;
-roads(133,3) = 15;
-roads(134,3) = 15;
-
-numberOfRandomCars = 10;
-numberOfCars = 50;
-cars = initializeCars(nodes, roads, numberOfCars, numberOfRandomCars);
-
 global positionIndex;
 positionIndex = 1;
 global roadIndex;
@@ -43,73 +25,108 @@ global nextRoadIndex;
 nextRoadIndex = 8;
 global nextRoadInRouteIndex; 
 nextRoadInRouteIndex = 9;
+global targetCar;
+targetCar = 10;
 global timeStep;
 timeStep = 0.1;
 global maxVelocityInIntersection;
 maxVelocityInIntersection = 2;
 
-initializedCarIndices = find(sum(cars'));
-unInitializedCarIndices = find(sum(cars')==0);
+numberOfIterations = 1000;
 
-savePosition = zeros(numberOfCars,numberOfIterations);
-saveRoad = zeros(numberOfCars,numberOfIterations);
-%saveMaxVelocity = zeros(nbrOfCars,numberOfIterations);
-saveCurrentVelocity = zeros(numberOfCars,numberOfIterations);
-%saveMaxAcceleration = zeros(nbrOfCars,numberOfIterations);
-%saveMaxDeacceleration = zeros(nbrOfCars,numberOfIterations);
-%saveVision = zeros(nbrOfCars,numberOfIterations);
-%saveNextRoad = zeros(nbrOfCars,numberOfIterations);
+nodes = initializeNodes();
+nbrOfNodes = size(nodes, 1);
+xmax = max(nodes(:,1));
+ymax = max(nodes(:,2));
+roads = initializeRoads();
+roads(125,3) = 42;
+roads(126,3) = 42;
+roads(149,3) = 10;
+roads(144,3) = 10;
+roads(133,3) = 15;
+roads(134,3) = 15;
 
-cars(:,positionIndex) = 0;
-routes = InizilizeRoutes(cars(initializedCarIndices,:),nodes,roads, 1, 10, length(unInitializedCarIndices));
-cars(initializedCarIndices,roadIndex) = routes(initializedCarIndices,1);
-cars(initializedCarIndices,nextRoadIndex) = routes(initializedCarIndices,2);
-cars(initializedCarIndices,nextRoadInRouteIndex) = 2;
-[cars routes] = sortwrapper(cars, routes);
+numberOfRandomCars = 0;
+numberOfTargetCars = 1*[0 1 2 3 4 5 6 7 8 9 10];
+numberOfStandardCars =2*[10 9 8 7 6 5 4 3 2 1 0];
+%numberOfRandomCars = 10;
+%numberOfCars = 50;
 
-for i = 1:numberOfIterations
-  initializedCarIndices = find(cars(:,roadIndex)>0);
-  unInitializedCarIndices = find(sum(cars')==0);
-  [~, saveRoad(initializedCarIndices,:)] = sortwrapper(cars(initializedCarIndices,:), saveRoad(initializedCarIndices,:)); 
-  [~, savePosition(initializedCarIndices,:)] = sortwrapper(cars(initializedCarIndices,:), savePosition(initializedCarIndices,:)); 
-  [~, saveCurrentVelocity(initializedCarIndices,:)] = sortwrapper(cars(initializedCarIndices,:), saveCurrentVelocity(initializedCarIndices,:));
-  [cars(initializedCarIndices,:) routes(initializedCarIndices,:)] = updateCars(cars(initializedCarIndices,:), nodes, roads,routes(initializedCarIndices,:));
-  initializedCarIndices = find(sum(cars'));
-  
-  if ~isempty(unInitializedCarIndices)
-    size(cars(unInitializedCarIndices(1),:));
-    size(routes(unInitializedCarIndices(1),:));
-    [routes(unInitializedCarIndices(1),:) cars(unInitializedCarIndices(1),:)] = generateNewCars(randi(nbrOfNodes - 1), randi(nbrOfNodes - 1), nodes, roads, length(unInitializedCarIndices));
-    cars(unInitializedCarIndices(1), roadIndex) = routes(unInitializedCarIndices(1),1);
-    cars(unInitializedCarIndices(1), nextRoadIndex) = routes(unInitializedCarIndices(1),2);
-    cars(unInitializedCarIndices(1), nextRoadInRouteIndex) = 1;
-    [~, saveRoad] = sortwrapper(cars, saveRoad); 
-    [~, savePosition] = sortwrapper(cars, savePosition); 
-    [~, saveCurrentVelocity] = sortwrapper(cars, saveCurrentVelocity);
-    [cars routes] = sortwrapper(cars, routes);
-  end
+atime = zeros(1,length(numberOfTargetCars));
+atimeWOS = zeros(1,length(numberOfTargetCars));
 
-  initializedCarIndices = find(cars(:,roadIndex)>0);
-  randomCarIndices = find(routes(:,end) == -1);
-  parkedCarIndices = find(cars(:,roadIndex) == 0);
-  targetCarIndies = find(routes(:,end) ~= -1);
+for rateTargetCars = 1:1%length(numberOfTargetCars)
+
+    numberOfCars = numberOfRandomCars + numberOfTargetCars(rateTargetCars) + numberOfStandardCars(rateTargetCars);
+    targetVector = getTargetVector(numberOfTargetCars(rateTargetCars), numberOfStandardCars(rateTargetCars));
+    targetI = 1;
     
-    if mod(i, 5) == 0
+    cars = initializeCars(nodes, roads, numberOfCars, numberOfRandomCars);
+    initializedCarIndices = find(sum(cars'));
+    unInitializedCarIndices = find(sum(cars')==0);
+    
+    savePosition = zeros(numberOfCars,numberOfIterations);
+    saveRoad = zeros(numberOfCars,numberOfIterations);
+    saveCurrentVelocity = zeros(numberOfCars,numberOfIterations);
+    %saveNextRoad = zeros(nbrOfCars,numberOfIterations);
+    saveTargetCar = zeros(numberOfCars,numberOfIterations);
+
+    cars(:,positionIndex) = 0;
+    routes = InizilizeRoutes(cars(initializedCarIndices,:),nodes,roads, 1, 10, length(unInitializedCarIndices));
+    cars(initializedCarIndices,roadIndex) = routes(initializedCarIndices,1);
+    cars(initializedCarIndices,nextRoadIndex) = routes(initializedCarIndices,2);
+    cars(initializedCarIndices,nextRoadInRouteIndex) = 2;
+    [cars routes] = sortwrapper(cars, routes);
+
+    for i = 1:numberOfIterations
+      initializedCarIndices = find(cars(:,roadIndex)>0);
+      unInitializedCarIndices = find(sum(cars')==0);
+      [~, saveRoad(initializedCarIndices,:)] = sortwrapper(cars(initializedCarIndices,:), saveRoad(initializedCarIndices,:)); 
+      [~, savePosition(initializedCarIndices,:)] = sortwrapper(cars(initializedCarIndices,:), savePosition(initializedCarIndices,:)); 
+      [~, saveCurrentVelocity(initializedCarIndices,:)] = sortwrapper(cars(initializedCarIndices,:), saveCurrentVelocity(initializedCarIndices,:));
+      [cars(initializedCarIndices,:) routes(initializedCarIndices,:)] = updateCars(cars(initializedCarIndices,:), nodes, roads,routes(initializedCarIndices,:));
+      initializedCarIndices = find(sum(cars'));
+
+      if ~isempty(unInitializedCarIndices)
+        target = targetVector(targetI);
+        targetI = targetI + 1;
+        [routes(unInitializedCarIndices(1),:) cars(unInitializedCarIndices(1),:)] = generateNewCars(randi(nbrOfNodes - 2), randi(nbrOfNodes - 2), nodes, roads, length(unInitializedCarIndices), target);
+        cars(unInitializedCarIndices(1), roadIndex) = routes(unInitializedCarIndices(1),1);
+        cars(unInitializedCarIndices(1), nextRoadIndex) = routes(unInitializedCarIndices(1),2);
+        cars(unInitializedCarIndices(1), nextRoadInRouteIndex) = 1;
+        [~, saveRoad] = sortwrapper(cars, saveRoad); 
+        [~, savePosition] = sortwrapper(cars, savePosition); 
+        [~, saveCurrentVelocity] = sortwrapper(cars, saveCurrentVelocity);
+        [cars routes] = sortwrapper(cars, routes);
+      end
+      initializedCarIndices = find(cars(:,roadIndex)>0);
+      randomCarIndices = find(routes(:,end) == -1);
+      parkedCarIndices = find(cars(:,roadIndex) == 0);
+      targetCarIndies = find(cars(:,targetCar) == 1);
+      standardCarIndies = find(cars(:,targetCar) == -1);
+
+      if mod(i, 5) == 0
         plotCoordinates = parameterCoordinates(cars(initializedCarIndices,:), nodes, roads);
         plotCoordinatesRandom = parameterCoordinates(cars(randomCarIndices,:), nodes, roads);
+        plotCoordinatesTarget = parameterCoordinates(cars(targetCarIndies,:), nodes, roads);
+        plotCoordinatesStandard = parameterCoordinates(cars(standardCarIndies,:), nodes, roads);
         clf;
         scatter(plotCoordinates(:,1), plotCoordinates(:,2), 'filled')
         hold on
         scatter(plotCoordinatesRandom(:,1), plotCoordinatesRandom(:,2), 'filled','red')
         hold on 
+        scatter(plotCoordinatesTarget(:,1), plotCoordinatesTarget(:,2), 'filled','blue')
+        hold on
+        scatter(plotCoordinatesStandard(:,1), plotCoordinatesStandard(:,2), 'filled','green')
+        hold on
         text(0, 190, strcat('Time: ',num2str(i*timeStep)), 'fontsize', 18);
         axis([-10, xmax+50, -10, ymax + 50])
         plotRoads(roads, nodes);
         drawnow
-    end
-    
-    saveRoad = saveRoads(cars, i, saveRoad);
-    savePosition = savePositions(cars, i, savePosition);
-    saveCurrentVelocity = saveCurrentVelocities(cars, i, saveCurrentVelocity);
-end
+      end
 
+      saveRoad = saveRoads(cars, i, saveRoad);
+      savePosition = savePositions(cars, i, savePosition);
+      saveCurrentVelocity = saveCurrentVelocities(cars, i, saveCurrentVelocity);
+    end
+end

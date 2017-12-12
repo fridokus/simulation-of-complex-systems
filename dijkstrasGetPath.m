@@ -26,7 +26,6 @@ function [path,costMatrix] = dijkstrasGetPath(startNode,stopNode,networkMatrix,a
            end
        end
     end
-        tmp_distance(startNode) = Inf;
      
     currentNode = stopNode;
     path = [];
