@@ -4,13 +4,13 @@ clc
 
 numberOfIterations = 7000;
 
-nodes = initializeNodesSquare();
+nodes = initializeNodes2R();
 xmax = max(nodes(:,1));
 ymax = max(nodes(:,2));
-roads = initializeRoadsSquare(nodes);
+roads = initializeRoads2R(nodes);
 
-numberOfRandomCars = 90;
-numberOfCars = 400;
+numberOfRandomCars = 0;
+numberOfCars = 200;
 
 cars = initializeCars(nodes, roads, numberOfCars, numberOfRandomCars);
 
@@ -69,14 +69,14 @@ for i = 1:numberOfIterations
   initializedCarIndices = find(sum(cars'));
 
   if ~isempty(unInitializedCarIndices) & mod(i, 5) == 0
-    [cars routes] = generateCarWrapper(cars, routes, nodes, roads, 1, 81, unInitializedCarIndices);
+    [cars routes] = generateCarWrapper(cars, routes, nodes, roads, 1, 6, unInitializedCarIndices);
   end
 
 
-  if ~isempty(unInitializedCarIndices) & mod(i, 5) == 0
-    unInitializedCarIndices = find(sum(cars')==0);
-    [cars routes] =generateCarWrapper(cars, routes, nodes, roads, 9, 72, unInitializedCarIndices);
-  end
+%  if ~isempty(unInitializedCarIndices) & mod(i, 5) == 0
+%    unInitializedCarIndices = find(sum(cars')==0);
+%    [cars routes] =generateCarWrapper(cars, routes, nodes, roads, 9, 72, unInitializedCarIndices);
+%  end
 
   initializedCarIndices = find(cars(:,roadIndex)>0);
   randomCarIndices = find(routes(:,end) == -1);
