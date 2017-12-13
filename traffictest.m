@@ -57,7 +57,7 @@ numberOfStandardCars = [0, 0, 2];
 
 %%% CREATE VIDEO
 v = VideoWriter('DecisionTraffic.mp4'); %'MPEG-4'
-v.FrameRate = 10;
+v.FrameRate = 15;
 v.Quality = 100;
 open(v);
 
@@ -75,7 +75,7 @@ for rateTargetCars = 2:2%length(numberOfTargetCars)
 
     cars = initializeCars(nodes, roads, numberOfCars, numberOfRandomCars);
 
-    numberOfIterations = 2000;
+    numberOfIterations = 2500;
 
     initializedCarIndices = find(sum(cars'));
     unInitializedCarIndices = find(sum(cars')==0);
@@ -126,19 +126,20 @@ for rateTargetCars = 2:2%length(numberOfTargetCars)
       standardCarIndices = find(cars(:,targetCar) == -1);
       %plotRoute = routes(target) 
 
-      if mod(i, 10) == 0
+      if mod(i, 2) == 0
         route = routes(targetCarIndices,:);
         plotCoordinates = parameterCoordinates(cars(initializedCarIndices,:), nodes, roads);
-%         translatedPlotCoordinates = orthogonalTranslation(plotCoordinates, nodes, roads, cars(initializedCarIndices, :));
-%         if randomCarIndices > 0
-%           plotCoordinatesRandom = parameterCoordinates(cars(randomCarIndices,:), nodes, roads);
-%           translatedPlotCoordinatesRandom = orthogonalTranslation(plotCoordinatesRandom, nodes, roads, cars(randomCarIndices, :));
-%         end
-        plotCoordinatesRandom = parameterCoordinates(cars(randomCarIndices,:), nodes, roads);
+        translatedPlotCoordinates = orthogonalTranslation(plotCoordinates, nodes, roads, cars(initializedCarIndices, :));
+        if randomCarIndices > 0
+          plotCoordinatesRandom = parameterCoordinates(cars(randomCarIndices,:), nodes, roads);
+          translatedPlotCoordinatesRandom = orthogonalTranslation(plotCoordinatesRandom, nodes, roads, cars(randomCarIndices, :));
+        end
         plotCoordinatesTarget = parameterCoordinates(cars(targetCarIndices,:), nodes, roads);
+        translatedPlotCoordinatesTarget = orthogonalTranslation(plotCoordinatesTarget, nodes, roads, cars(targetCarIndices, :));
         plotCoordinatesStandard = parameterCoordinates(cars(standardCarIndices,:), nodes, roads);
-        plotRoadsAndUpdateRoute(h, a1, roads, nodes, route, i * timeStep, v, xmax, ymax, plotCoordinatesRandom, ...
-                                plotCoordinatesTarget, plotCoordinatesStandard)
+        translatedPlotCoordinatesStandard = orthogonalTranslation(plotCoordinatesStandard, nodes, roads, cars(standardCarIndices, :));
+        plotRoadsAndUpdateRoute(h, a1, roads, nodes, route, ceil(i * timeStep), v, xmax, ymax, translatedPlotCoordinatesRandom, ...
+                                translatedPlotCoordinatesTarget, translatedPlotCoordinatesStandard)
       end
       
       saveRoad = saveRoads(cars, i, saveRoad);

@@ -23,12 +23,12 @@ function plotRoadsAndUpdateRoute(h, a1, roads, nodes, route, time, v, xmax, ymax
     %hold on
     plot(plotCoordinatesRandom(:,1), plotCoordinatesRandom(:,2), 'o', 'MarkerFaceColor',[0.5,0.5,0.5], 'MarkerEdgeColor', 'k')
     hold on 
-    scatter(plotCoordinatesTarget(:,1), plotCoordinatesTarget(:,2), 50, 'filled','blue')
+    plot(plotCoordinatesTarget(:,1), plotCoordinatesTarget(:,2), 'o', 'MarkerFaceColor','blue', 'MarkerEdgeColor', 'k', 'MarkerSize', 8)
     hold on
     %scatter(plotCoordinatesStandard(:,1), plotCoordinatesStandard(:,2), 'filled','green')
     %hold on
     %text(0, 1500, strcat('Time: ',num2str(i*timeStep)), 'fontsize', 18);
-    title(['Time: ', num2str(time)]);
+    title(['Time: ', num2str(time)], 'fontsize', 24);
     xlim([-10 xmax+50]); 
     ylim([-10 ymax + 50]);
     set(a1,'xTick',[],'yTick',[]);

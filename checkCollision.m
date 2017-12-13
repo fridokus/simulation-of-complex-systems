@@ -11,7 +11,7 @@ function acceleration = checkCollision(cars, nodes, roads)
   nbrOfCars = size(cars, 1);  
   acceleration = cars(:,maxAccelerationIndex);
   roadLengths = calculateRoadLength(nodes, roads);
-  safetyDistanceBetweenCars = 2;
+  safetyDistanceBetweenCars = 10;
   
   for iCar=2:nbrOfCars
     firstCar = cars(iCar,:); % second furthest on road
