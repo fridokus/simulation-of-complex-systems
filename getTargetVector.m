@@ -1,8 +1,8 @@
 function targetVector = getTargetVector(numberOfTargetCars,numberOfStandardCars)
 
     targetVector = zeros(1,numberOfTargetCars+numberOfStandardCars);
-    t1 = ones(1,numberOfTargetCars);
-    t2 = -1*ones(1,numberOfStandardCars);
+    t1 = ones(1,round(numberOfTargetCars));
+    t2 = -1*ones(1,round(numberOfStandardCars));
     
     if numberOfTargetCars == 0
         targetVector = t2;

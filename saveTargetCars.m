@@ -1,8 +1,8 @@
-function saveTargetCars = saveTargetCars(cars, nIteration,saveTargetCar)
+function saveTargetCar = saveTargetCars(cars, nIteration,saveTargetCar)
 
     global targetCar;
     
     saveTargetCar(:,nIteration) = cars(:,targetCar);
-    save('saveTargetCars.mat','saveTargetCar','-append')
+    save('saveVision.mat','saveTargetCar','-append')
     
 end

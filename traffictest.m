@@ -20,16 +20,28 @@ ymax = max(nodes(:,2));
 % roads(133,3) = 15;
 % roads(134,3) = 15;
 
+%%%%% If you want same velocitie evrywhere
+%roads(:,3) = 14;
+
+numberOfRandomCars =0;
+p1 = 0:1:10;
+p2 = 10:-1:0;
+numberOfTargetCars = 10*p1;
+numberOfStandardCars =10*p2;
+
+nbrRuns = 10;
+
+atime = zeros(nbrRuns,length(numberOfTargetCars));
+atimeWOS = zeros(nbrRuns,length(numberOfTargetCars));
+atimeTarget = zeros(nbrRuns,length(numberOfTargetCars));
+atimeStandard = zeros(nbrRuns,length(numberOfTargetCars));
 
 
-numberOfRandomCars = 0;
-numberOfTargetCars = 1*[0 1 2 3 4 5 6 7 8 9 10];
-numberOfStandardCars =1*[10 9 8 7 6 5 4 3 2 1 0];
 
-atime = zeros(1,length(numberOfTargetCars));
-atimeWOS = zeros(1,length(numberOfTargetCars));
 
-for rateTargetCars = 1:1%length(numberOfTargetCars)
+for run = 1:nbrRuns
+
+for rateTargetCars = 1:length(numberOfTargetCars)
 
 numberOfCars = numberOfRandomCars + numberOfTargetCars(rateTargetCars) + numberOfStandardCars(rateTargetCars);
 targetVector = getTargetVector(numberOfTargetCars(rateTargetCars), numberOfStandardCars(rateTargetCars));
@@ -120,40 +132,56 @@ while i < numberOfIterations && length(parkedCarIndices) < nbrOfCars
   standardCarIndies = find(cars(:,targetCar) == -1);
   %plotRoute = routes(target) 
     
-    if mod(i, 5) == 0
-        plotCoordinates = parameterCoordinates(cars(initializedCarIndices,:), nodes, roads);
-        plotCoordinatesRandom = parameterCoordinates(cars(randomCarIndices,:), nodes, roads);
-        plotCoordinatesTarget = parameterCoordinates(cars(targetCarIndies,:), nodes, roads);
-        plotCoordinatesStandard = parameterCoordinates(cars(standardCarIndies,:), nodes, roads);
-        clf;
-        scatter(plotCoordinates(:,1), plotCoordinates(:,2), 'filled')
-        hold on
-        scatter(plotCoordinatesRandom(:,1), plotCoordinatesRandom(:,2), 'filled','red')
-        hold on 
-        scatter(plotCoordinatesTarget(:,1), plotCoordinatesTarget(:,2), 'filled','blue')
-        hold on
-        scatter(plotCoordinatesStandard(:,1), plotCoordinatesStandard(:,2), 'filled','green')
-        hold on
-        text(0, 190, strcat('Time: ',num2str(i*timeStep)), 'fontsize', 18);
-        axis([-10, xmax+50, -10, ymax + 50])
-        plotRoads(roads, nodes);
-        drawnow
-    end
+%     if mod(i, 5) == 0
+%         plotCoordinates = parameterCoordinates(cars(initializedCarIndices,:), nodes, roads);
+%         plotCoordinatesRandom = parameterCoordinates(cars(randomCarIndices,:), nodes, roads);
+%         plotCoordinatesTarget = parameterCoordinates(cars(targetCarIndies,:), nodes, roads);
+%         plotCoordinatesStandard = parameterCoordinates(cars(standardCarIndies,:), nodes, roads);
+%         clf;
+%         scatter(plotCoordinates(:,1), plotCoordinates(:,2), 'filled')
+%         hold on
+%         scatter(plotCoordinatesRandom(:,1), plotCoordinatesRandom(:,2), 'filled','red')
+%         hold on 
+%         scatter(plotCoordinatesTarget(:,1), plotCoordinatesTarget(:,2), 'filled','blue')
+%         hold on
+%         scatter(plotCoordinatesStandard(:,1), plotCoordinatesStandard(:,2), 'filled','green')
+%         hold on
+%         text(0, 190, strcat('Time: ',num2str(i*timeStep)), 'fontsize', 18);
+%         axis([-10, xmax+50, -10, ymax + 50])
+%         plotRoads(roads, nodes);
+%         drawnow
+%     end
     
-    savePosition = savePositions(cars, i, savePosition);
-    saveTargetCar = saveTargetCars(cars,i,saveTargetCar);
+    savePosition(:,i) = cars(:,1);
+    saveTargetCar(:,i) = cars(:,targetCar);
 
     
 end
 
-[atimeWOS(rateTargetCars),atime(rateTargetCars)] = getAvreegeTime(savePosition);
+rateTargetCars
+run
+
+nbrTCars = numberOfTargetCars(rateTargetCars);
+[atimeWOS(run,rateTargetCars),atime(run,rateTargetCars),atimeTarget(run,rateTargetCars),atimeStandard(run,rateTargetCars)] = getAvreegeTime(saveTargetCar,nbrTCars);
+end
 
 end
+
+%%
+
 
 rateTargetCarsPlot = numberOfTargetCars/max(numberOfTargetCars);
 figure
-plot(rateTargetCarsPlot,atime)
-figure 
-plot(rateTargetCarsPlot,atimeWOS)
-
+plot(rateTargetCarsPlot,sum(atime)/nbrRuns,'-*b')
+hold on
+plot(rateTargetCarsPlot,sum(atimeTarget)/nbrRuns,'-ob')
+hold on
+plot(rateTargetCarsPlot,sum(atimeStandard)/nbrRuns,'-.b')
+legend('average time for all cars','average time for cars with DRG system','average time for cars without DRG system')
+title('Average route time in square zity with diffrent velocities, whitout random cars')
+xlabel('proporion of cars using DRG system')
+ylabel('average route time')
+% figure 
+% plot(rateTargetCarsPlot,atimeWOS,'o')
+% title('Without stop')
 
