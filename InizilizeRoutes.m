@@ -9,8 +9,9 @@ function routes = InizilizeRoutes(cars,nodes,roads,startNode, stopNode, numberOf
    end
    if nbrOfCars > 1
        for j = 1:size(cars, 1)
-           route = zeros(1, size(roads,1)) - 1;
-           startRoad = randi(size(roads,1));
+           firstRoadSize = size(roads, 1)
+           route = zeros(1, firstRoadSize) - 1;
+           startRoad = randi(firstRoadSize);
            nextRoad = getNextRoadIndex(startRoad, roads);
            route(1) = startRoad;
            route(2) = nextRoad;
