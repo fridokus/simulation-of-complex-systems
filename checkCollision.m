@@ -27,7 +27,7 @@ function acceleration = checkCollision(cars, nodes, roads)
       end
       acceleration(iCar) = maxAcceleration;
     else
-      % If you're first on you're road
+      % If you're first on your road
       iCarsOnUpcomingRoad = find(firstCar(nextRoadIndex) == cars(:,roadIndex));
       if ~isempty(iCarsOnUpcomingRoad)
         firstCarUpcomingPosition = roadLengths(firstCar(roadIndex)) - firstCarUpcomingPosition;
